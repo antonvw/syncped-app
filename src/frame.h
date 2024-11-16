@@ -34,7 +34,10 @@ private:
 
   bool is_open(const wex::path& filename) override;
 
-  bool next_page() override;
+  bool page_next() override;
+  bool page_prev() override;
+  bool page_restore() override;
+  bool page_save() override;
 
   void on_command_item_dialog(wxWindowID dialogid, const wxCommandEvent& event)
     override;
@@ -42,17 +45,14 @@ private:
   wex::factory::stc* open_file(
     const wex::path&      filename,
     const wex::data::stc& data = wex::data::stc()) override;
-
   wex::factory::stc* open_file(
     const wex::path&      filename,
     const std::string&    text,
     const wex::data::stc& data = wex::data::stc()) override;
-
   wex::factory::stc* open_file_vcs(
     const wex::path&      filename,
     wex::vcs_entry&       vcs,
     const wex::data::stc& data = wex::data::stc()) override;
-
   void open_file_same_page(const wex::path& p) override;
 
   bool print_ex(wex::syntax::stc* stc, const std::string& text) override;
@@ -66,7 +66,6 @@ private:
   void statusbar_clicked(const std::string& pane) override;
 
   void sync_all() override;
-
   void sync_close_all(wxWindowID id) override;
 
   bool vi_exec_command(wex::ex_command& command) override;
@@ -92,6 +91,7 @@ private:
   bool m_maximized{false};
 
   int m_split_id{1};
+  int m_nb_sel{-1};
 
   std::string m_saved_page;
 
