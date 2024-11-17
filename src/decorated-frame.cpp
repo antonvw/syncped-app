@@ -43,7 +43,7 @@ decorated_frame::decorated_frame(app* app)
         wex::data::stc::window_t().set(wex::data::stc::WIN_SINGLE_LINE))))
 {
   SetIcon(wxICON(app));
-  m_dlg->set_validator("^[a-zA-Z0-9:.]+$");
+  m_dlg->set_validator("^[a-zA-Z0-9:._-]+$");
 
   wex::process::prepare_output(this);
 

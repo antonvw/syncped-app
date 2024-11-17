@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 
 - on File Save As on not yet existing file removes the old page
+- File New did not accept a minus char as input
 
 ## 24.10 - 2024-09-22
 
