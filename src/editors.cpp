@@ -78,6 +78,8 @@ editors::editors(wex::del::frame* frame, const wex::data::window& data)
         menu.append({{}, {stc->get_file().path(), frame}});
       }
 
+      menu.append({{}, {wex::ID_ALL_STC_CLEAR_DIFFS, _("Clear Diffs")}});
+
       PopupMenu(&menu);
     });
 }
