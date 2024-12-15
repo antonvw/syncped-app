@@ -84,6 +84,11 @@ void frame::bind()
         m_editors->for_each<wex::stc>(event.GetId());
       },
       wex::ID_ALL_CLOSE},
+     {[=, this](wxCommandEvent& event)
+      {
+        m_editors->for_each<wex::stc>(event.GetId());
+      },
+      wex::ID_ALL_STC_CLEAR_DIFFS},
      {[=, this](const wxCommandEvent& event)
       {
         shift_double_click();
