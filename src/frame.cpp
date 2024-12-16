@@ -431,7 +431,7 @@ void frame::open_file_same_page(const wex::path& p)
   }
 }
 
-bool frame::page_next()
+bool frame::page_next(bool from_diff)
 {
   if (m_editors->GetPageCount() < 2)
   {
@@ -445,12 +445,19 @@ bool frame::page_next()
   else
   {
     m_editors->AdvanceSelection();
+
+    if (auto* stc(((wex::stc*)m_editors->GetCurrentPage()));
+        stc != nullptr && from_diff)
+    {
+      stc->diffs().first();
+      stc->diffs().status();
+    }
   }
 
   return true;
 }
 
-bool frame::page_prev()
+bool frame::page_prev(bool from_diff)
 {
   if (m_editors->GetPageCount() < 2)
   {
@@ -464,6 +471,13 @@ bool frame::page_prev()
   else
   {
     m_editors->AdvanceSelection(false);
+
+    if (auto* stc(((wex::stc*)m_editors->GetCurrentPage()));
+        stc != nullptr && from_diff)
+    {
+      stc->diffs().end();
+      stc->diffs().status();
+    }
   }
 
   return true;

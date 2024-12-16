@@ -34,8 +34,8 @@ private:
 
   bool is_open(const wex::path& filename) override;
 
-  bool page_next() override;
-  bool page_prev() override;
+  bool page_next(bool from_diff = false) override;
+  bool page_prev(bool from_diff = false) override;
   bool page_restore() override;
   bool page_save() override;
 
