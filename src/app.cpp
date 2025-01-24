@@ -2,7 +2,7 @@
 // Name:      app.cpp
 // Purpose:   Implementation of class app
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2021-2024 Anton van Wezenbeek
+// Copyright: (c) 2021-2025 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "app.h"
@@ -47,7 +47,9 @@ bool app::OnInit()
            [&](bool on)
            {
              if (!on)
+             {
                return;
+             }
              m_data.flags(
                wex::data::stc::window_t().set(wex::data::stc::WIN_EX),
                wex::data::control::OR);
@@ -63,7 +65,9 @@ bool app::OnInit()
            [&](bool on)
            {
              if (!on)
+             {
                return;
+             }
              m_data.flags(
                wex::data::stc::window_t().set(wex::data::stc::WIN_HEX),
                wex::data::control::OR);
@@ -107,6 +111,15 @@ bool app::OnInit()
              }
            }},
 
+          {{"no-load-lexers", "do not load lexers file"},
+           [&](bool on)
+           {
+             if (on)
+             {
+               wex::lexers::is_initial_load(false);
+             }
+           }},
+
           {{"project,p", "open specified files as projects"},
            [&](bool on)
            {
@@ -117,23 +130,29 @@ bool app::OnInit()
            [&](bool on)
            {
              if (on)
+             {
                m_split = wxBOTTOM;
+             }
            }},
 
           {{"splitver,O", "split tabs vertically"},
            [&](bool on)
            {
              if (on)
+             {
                m_split = wxRIGHT;
+             }
            }},
 
           {{"readonly,R", "readonly mode"},
            [&](bool on)
            {
              if (on)
+             {
                m_data.flags(
                  wex::data::stc::window_t().set(wex::data::stc::WIN_READ_ONLY),
                  wex::data::control::OR);
+             }
            }}},
 
          {// --- options with arguments ---
@@ -207,7 +226,9 @@ bool app::OnInit()
     for (const auto& l : wex::lexers::get()->get_lexers())
     {
       if (!l.display_lexer().empty())
+      {
         std::cout << l.display_lexer() << "\n";
+      }
     }
 
     return false;
