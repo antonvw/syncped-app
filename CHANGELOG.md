@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Added .gersemirc file
 - Added Clear Diffs
+- Added cmdline option no-load-lexers
 
 ### Changed
 
