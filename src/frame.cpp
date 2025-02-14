@@ -191,9 +191,12 @@ wex::factory::stc* frame::open_file_vcs(
 
   if (nd.page() == nullptr)
   {
+    wex::data::stc sd(data);
+    sd.head_path(filename);
+
     nd.page(new wex::stc(
       vcs.std_out(),
-      wex::data::stc(data).window(wex::data::window().parent(m_editors).name(
+      sd.window(wex::data::window().parent(m_editors).name(
         filename.filename() + " " + unique))));
     nd.caption(filename.filename() + " " + unique);
 
