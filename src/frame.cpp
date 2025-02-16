@@ -2,7 +2,7 @@
 // Name:      frame.cpp
 // Purpose:   Implementation of class frame
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2021-2024 Anton van Wezenbeek
+// Copyright: (c) 2021-2025 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/algorithm/string.hpp>
@@ -100,27 +100,25 @@ frame::activate(wex::data::listview::type_t type, const wex::lexer* lexer)
   {
     return get_project();
   }
-  else
+
+  pane_show("OUTPUT");
+
+  const auto name =
+    wex::data::listview().type(type).type_description() +
+    (lexer != nullptr ? " " + lexer->display_lexer() : std::string());
+  auto* list = (wex::del::listview*)m_lists->page_by_key(name);
+
+  if (list == nullptr && type != wex::data::listview::FILE)
   {
-    pane_show("OUTPUT");
+    list = new wex::del::listview(
+      wex::data::listview(wex::data::window().parent(m_lists))
+        .type(type)
+        .lexer(lexer));
 
-    const auto name =
-      wex::data::listview().type(type).type_description() +
-      (lexer != nullptr ? " " + lexer->display_lexer() : std::string());
-    auto* list = (wex::del::listview*)m_lists->page_by_key(name);
-
-    if (list == nullptr && type != wex::data::listview::FILE)
-    {
-      list = new wex::del::listview(
-        wex::data::listview(wex::data::window().parent(m_lists))
-          .type(type)
-          .lexer(lexer));
-
-      m_lists->add_page(wex::data::notebook().page(list).key(name).select());
-    }
-
-    return list;
+    m_lists->add_page(wex::data::notebook().page(list).key(name).select());
   }
+
+  return list;
 }
 
 void frame::debug_exe(const wex::path& p)
@@ -158,10 +156,8 @@ wex::del::file* frame::get_project()
   {
     return nullptr;
   }
-  else
-  {
-    return (wex::del::file*)m_projects->GetPage(m_projects->GetSelection());
-  }
+
+  return (wex::del::file*)m_projects->GetPage(m_projects->GetSelection());
 }
 
 bool frame::is_open(const wex::path& filename)
@@ -395,28 +391,27 @@ wex::factory::stc* frame::open_file_blame(
     vcs_blame_show(&vcs, page);
     return page;
   }
-  else
-  {
-    page = new wex::stc(
-      std::string(),
-      wex::data::stc(data).window(
-        wex::data::window().parent(m_editors).name(filename.string())));
 
-    page->get_lexer().set(wex::path_lexer(filename).lexer(), true);
+  auto* page = new wex::stc(
+    std::string(),
+    wex::data::stc(data).window(
+      wex::data::window().parent(m_editors).name(filename.string())));
 
-    m_editors->add_page(wex::data::notebook()
-                          .page(page)
-                          .key(vcs.data().exe())
-                          .caption(vcs.get_blame().caption())
-                          .select());
+  page->get_lexer().set(wex::path_lexer(filename).lexer(), true);
 
-    vcs_blame_show(&vcs, page);
-    page->EmptyUndoBuffer();
-    page->SetSavePoint();
-    page->inject(data.control());
-    page->config_get();
-    return page;
-  }
+  m_editors->add_page(wex::data::notebook()
+                        .page(page)
+                        .key(vcs.data().exe())
+                        .caption(vcs.get_blame().caption())
+                        .select());
+
+  vcs_blame_show(&vcs, page);
+  page->EmptyUndoBuffer();
+  page->SetSavePoint();
+  page->inject(data.control());
+  page->config_get();
+
+  return page;
 }
 
 void frame::open_file_same_page(const wex::path& p)
@@ -436,25 +431,20 @@ void frame::open_file_same_page(const wex::path& p)
 
 bool frame::page_next(bool from_diff)
 {
-  if (m_editors->GetPageCount() < 2)
+  if (
+    m_editors->GetPageCount() < 2 ||
+    m_editors->GetSelection() == m_editors->GetPageCount() - 1)
   {
     return false;
   }
 
-  if (m_editors->GetSelection() == m_editors->GetPageCount() - 1)
-  {
-    return false;
-  }
-  else
-  {
-    m_editors->AdvanceSelection();
+  m_editors->AdvanceSelection();
 
-    if (auto* stc(((wex::stc*)m_editors->GetCurrentPage()));
-        stc != nullptr && from_diff)
-    {
-      stc->diffs().first();
-      stc->diffs().status();
-    }
+  if (auto* stc(((wex::stc*)m_editors->GetCurrentPage()));
+      stc != nullptr && from_diff)
+  {
+    stc->diffs().first();
+    stc->diffs().status();
   }
 
   return true;
@@ -471,16 +461,14 @@ bool frame::page_prev(bool from_diff)
   {
     return false;
   }
-  else
-  {
-    m_editors->AdvanceSelection(false);
 
-    if (auto* stc(((wex::stc*)m_editors->GetCurrentPage()));
-        stc != nullptr && from_diff)
-    {
-      stc->diffs().end();
-      stc->diffs().status();
-    }
+  m_editors->AdvanceSelection(false);
+
+  if (auto* stc(((wex::stc*)m_editors->GetCurrentPage()));
+      stc != nullptr && from_diff)
+  {
+    stc->diffs().end();
+    stc->diffs().status();
   }
 
   return true;
