@@ -2,7 +2,13 @@ cmake_minimum_required(VERSION 3.21)
 
 project(syncped)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 find_package(wex 25.4 QUIET)
+
+if(NOT ${wex_FOUND})
+  message(FATAL_ERROR "No suitable wex package found")
+endif()
 
 if(wexENABLE_GETTEXT)
   include(FindGettext)
@@ -15,6 +21,13 @@ set(CPACK_GENERATOR "ZIP")
 set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
 set(CPACK_PACKAGE_VERSION "${APPL_VERSION}")
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-v${CPACK_PACKAGE_VERSION}")
+
+if(UNIX AND NOT (APPLE))
+  #  set(
+  #    CMAKE_EXE_LINKER_FLAGS
+  #    "${CMAKE_EXE_LINKER_FLAGS} -Wl,--copy-dt-needed-entries"
+  #  )
+endif()
 
 set(CMAKE_OSX_ARCHITECTURES "arm64")
 

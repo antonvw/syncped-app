@@ -11,7 +11,13 @@ syncped offers a full featured source code text editor.
 ## Building
 
 ```bash
-git clone git@gitlab.kitware.com:antonvw/syncped.git
+git clone https://gitlab.kitware.com/antonvw/syncped.git
+```
+
+or
+
+```bash
+git clone https://github.com/antonvw/syncped-app.git
 ```
 
 ### for Linux or osx
