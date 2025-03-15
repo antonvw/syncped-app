@@ -33,7 +33,7 @@ bool app::OnInit()
           {{"end,+", "start at end any file opened"},
            [&](const std::any& s)
            {
-             m_data.control(wex::data::control().command("G"));
+             m_data.control(wex::data::control().command(":$"));
            }},
 
           {{"debug,d",

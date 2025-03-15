@@ -1,12 +1,15 @@
 *** Comments ***
-Copyright: (c) 2020-2023 Anton van Wezenbeek
+Copyright: (c) 2020-2025 Anton van Wezenbeek
+
 
 *** Settings ***
-Documentation	Testcases for syncped cmdline
-Test Setup	Test Setup
-Suite Setup	Syncped Suite Setup
-Suite Teardown	Suite Teardown
-Resource	keywords.resource
+Documentation       Testcases for syncped cmdline
+
+Resource            keywords.resource
+
+Suite Setup         Syncped Suite Setup
+Suite Teardown      Suite Teardown
+Test Setup          Test Setup
 
 
 *** Test Cases ***
@@ -21,6 +24,7 @@ help
 	# our own
 	Should Contain	${result.stdout}	--ex
 	Should Contain	${result.stdout}	-j
+	Should Contain	${result.stdout}	-+
 	Should Contain	${result.stdout}	-V
 	Should Contain	${result.stdout}	-X
 	Should Contain	${result.stdout}	version
