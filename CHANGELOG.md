@@ -10,10 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
-- Added another remote to GitHub and GitHub actions
-- Added .gersemirc file
-- Added Clear Diffs
-- Added cmdline option no-load-lexers
+- added another remote to GitHub and GitHub actions
+- added .gersemirc file
+- added Clear Diffs
+- added command-line option no-load-lexers
 
 ### Changed
 
@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - on File Save As on not yet existing file removes the old page
 - File New did not accept a minus char as input
+- command-line option --end supported in ex mode
 
 ## [24.10] - 2024-09-22
 
