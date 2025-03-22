@@ -2,11 +2,13 @@
 // Name:      find-files.cpp
 // Purpose:   Implementation of class find_files
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2020-2024 Anton van Wezenbeek
+// Copyright: (c) 2020-2025 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "find-files.h"
+#include <thread>
+
 #include "defs.h"
+#include "find-files.h"
 
 find_files::find_files(wex::del::frame* f)
   : item_dialog(

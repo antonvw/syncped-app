@@ -4,7 +4,7 @@ project(syncped)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-find_package(wex 25.4 QUIET)
+find_package(wex 25.10 QUIET)
 
 if(NOT ${wex_FOUND})
   message(FATAL_ERROR "No suitable wex package found")

@@ -40,20 +40,20 @@ jobs:
         shell: pwsh
         run: |
           mkdir -Force build
-          mkdir -Force "c:\Program Files (x86)\wex\include\wex\25.4"
+          mkdir -Force "c:\Program Files (x86)\wex\include\wex\25.10"
           mkdir -Force "c:\Program Files (x86)\wex\lib"
           Get-ChildItem -Path ".\*.lib" -Recurse | Move-Item -Force -Destination "c:\Program Files (x86)\wex\lib"
           git clone --recursive --shallow-submodules --depth 1 https://github.com/antonvw/wex.git
           Copy-Item -Path wex\cmake -Destination cmake -Recurse
-          Copy-Item -Path wex\include\wex -Destination "c:\Program Files (x86)\wex\include\wex\25.4\wex" -Recurse
-          Copy-Item -Path wex\external\wxWidgets\include\wx -Destination "c:\Program Files (x86)\wex\include\wex\25.4\wx" -Recurse
-          Copy-Item -Path wex-lib-windows\external\wxWidgets\lib\vc_x64_lib\mswu\wx\setup.h -Destination "c:\Program Files (x86)\wex\include\wex\25.4\wx" -Recurse
-          Copy-Item -Path wex\external\pugixml\src\pugiconfig.hpp -Destination "c:\Program Files (x86)\wex\include\wex\25.4" -Recurse
-          Copy-Item -Path wex\external\pugixml\src\pugixml.hpp -Destination "c:\Program Files (x86)\wex\include\wex\25.4" -Recurse
-          Copy-Item -Path wex\external\ctags\libreadtags\readtags.h -Destination "c:\Program Files (x86)\wex\include\wex\25.4" -Recurse
-          Copy-Item wex\external\wxMaterialDesignArtProvider\MaterialDesign\* -Destination "c:\Program Files (x86)\wex\include\wex\25.4\" -Recurse
-          Copy-Item -Path wex\external\doctest\doctest\doctest.h -Destination "c:\Program Files (x86)\wex\include\wex\25.4" -Recurse
-          Copy-Item wex\external\trompeloeil\include\* -Destination "c:\Program Files (x86)\wex\include\wex\25.4\" -Recurse
+          Copy-Item -Path wex\include\wex -Destination "c:\Program Files (x86)\wex\include\wex\25.10\wex" -Recurse
+          Copy-Item -Path wex\external\wxWidgets\include\wx -Destination "c:\Program Files (x86)\wex\include\wex\25.10\wx" -Recurse
+          Copy-Item -Path wex-lib-windows\external\wxWidgets\lib\vc_x64_lib\mswu\wx\setup.h -Destination "c:\Program Files (x86)\wex\include\wex\25.10\wx" -Recurse
+          Copy-Item -Path wex\external\pugixml\src\pugiconfig.hpp -Destination "c:\Program Files (x86)\wex\include\wex\25.10" -Recurse
+          Copy-Item -Path wex\external\pugixml\src\pugixml.hpp -Destination "c:\Program Files (x86)\wex\include\wex\25.10" -Recurse
+          Copy-Item -Path wex\external\ctags\libreadtags\readtags.h -Destination "c:\Program Files (x86)\wex\include\wex\25.10" -Recurse
+          Copy-Item wex\external\wxMaterialDesignArtProvider\MaterialDesign\* -Destination "c:\Program Files (x86)\wex\include\wex\25.10\" -Recurse
+          Copy-Item -Path wex\external\doctest\doctest\doctest.h -Destination "c:\Program Files (x86)\wex\include\wex\25.10" -Recurse
+          Copy-Item wex\external\trompeloeil\include\* -Destination "c:\Program Files (x86)\wex\include\wex\25.10\" -Recurse
           .\wex\build-gen.ps1 -boost_dir ${{steps.install-boost.outputs.BOOST_ROOT}} -prepare
 
       - name: Build

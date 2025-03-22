@@ -46,16 +46,16 @@ jobs:
         run:
           git clone --recursive --shallow-submodules --depth 1 https://github.com/antonvw/wex.git &&
           cp -rp wex/cmake cmake &&
-          sudo mkdir -p /usr/local/include/wex/25.4 &&
-          sudo cp -rp wex/include/wex /usr/local/include/wex/25.4 &&
-          sudo cp -rp wex/external/wxWidgets/include/wx /usr/local/include/wex/25.4 &&
-          sudo cp -rp wex-lib-ubuntu/external/wxWidgets/lib/wx/include/gtk3-unicode-static-3.3/wx/setup.h /usr/local/include/wex/25.4/wx &&
-          sudo cp -rp wex/external/pugixml/src/pugiconfig.hpp /usr/local/include/wex/25.4 &&
-          sudo cp -rp wex/external/pugixml/src/pugixml.hpp /usr/local/include/wex/25.4 &&
-          sudo cp -rp wex/external/ctags/libreadtags/readtags.h /usr/local/include/wex/25.4 &&
-          sudo cp -rp wex/external/wxMaterialDesignArtProvider/MaterialDesign/. /usr/local/include/wex/25.4 &&
-          sudo cp -rp wex/external/doctest/doctest/doctest.h /usr/local/include/wex/25.4 &&
-          sudo cp -rp wex/external/trompeloeil/include/. /usr/local/include/wex/25.4 &&
+          sudo mkdir -p /usr/local/include/wex/25.10 &&
+          sudo cp -rp wex/include/wex /usr/local/include/wex/25.10 &&
+          sudo cp -rp wex/external/wxWidgets/include/wx /usr/local/include/wex/25.10 &&
+          sudo cp -rp wex-lib-ubuntu/external/wxWidgets/lib/wx/include/gtk3-unicode-static-3.3/wx/setup.h /usr/local/include/wex/25.10/wx &&
+          sudo cp -rp wex/external/pugixml/src/pugiconfig.hpp /usr/local/include/wex/25.10 &&
+          sudo cp -rp wex/external/pugixml/src/pugixml.hpp /usr/local/include/wex/25.10 &&
+          sudo cp -rp wex/external/ctags/libreadtags/readtags.h /usr/local/include/wex/25.10 &&
+          sudo cp -rp wex/external/wxMaterialDesignArtProvider/MaterialDesign/. /usr/local/include/wex/25.10 &&
+          sudo cp -rp wex/external/doctest/doctest/doctest.h /usr/local/include/wex/25.10 &&
+          sudo cp -rp wex/external/trompeloeil/include/. /usr/local/include/wex/25.10 &&
           mv wex/build-gen.sh . &&
           ./build-gen.sh -b -p -B ${{steps.install-boost.outputs.BOOST_ROOT}}
         env:
