@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [25.10] - 2025-04 [Unreleased]
 
+### Changed
+
+- uses wex 25.10
+- updated GitHub actions to use wex-version variable
+
 ## [25.04] - 2025-03-16
 
 ### Added
