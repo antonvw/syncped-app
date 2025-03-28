@@ -435,6 +435,8 @@ bool frame::page_next(bool from_diff)
     m_editors->GetPageCount() < 2 ||
     m_editors->GetSelection() == m_editors->GetPageCount() - 1)
   {
+    wex::log::status("No next page");
+    m_editors->GetCurrentPage()->SetFocus();
     return false;
   }
 
@@ -452,13 +454,10 @@ bool frame::page_next(bool from_diff)
 
 bool frame::page_prev(bool from_diff)
 {
-  if (m_editors->GetPageCount() < 2)
+  if (m_editors->GetPageCount() < 2 || m_editors->GetSelection() == 0)
   {
-    return false;
-  }
-
-  if (m_editors->GetSelection() == 0)
-  {
+    wex::log::status("No prev page");
+    m_editors->GetCurrentPage()->SetFocus();
     return false;
   }
 
@@ -740,26 +739,17 @@ bool frame::vi_exec_command(wex::ex_command& command)
 
   try
   {
-    if (m_editors->GetPageCount() > 0)
+    if (const auto& cmd(boost::algorithm::trim_copy(command.command()));
+        m_editors->GetPageCount() > 0)
     {
-      if (boost::algorithm::trim_copy(command.command()) == ":n")
+      if (cmd == ":n")
       {
-        if (m_editors->GetSelection() == m_editors->GetPageCount() - 1)
-        {
-          return false;
-        }
-
-        m_editors->AdvanceSelection();
+        page_next();
         handled = true;
       }
-      else if (boost::algorithm::trim_copy(command.command()) == ":prev")
+      else if (cmd == ":prev")
       {
-        if (m_editors->GetSelection() == 0)
-        {
-          return false;
-        }
-
-        m_editors->AdvanceSelection(false);
+        page_prev();
         handled = true;
       }
 
@@ -770,7 +760,7 @@ bool frame::vi_exec_command(wex::ex_command& command)
       }
     }
   }
-  catch (std::exception& e)
+  catch (const std::exception& e)
   {
     wex::log(e) << command.command();
   }
