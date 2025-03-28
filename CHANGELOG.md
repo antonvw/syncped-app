@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 - current page can be pinned
+- added :tabdo to run vi commands on each tab
 
 ### Changed
 
