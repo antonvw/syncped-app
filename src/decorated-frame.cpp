@@ -16,9 +16,9 @@
 #include "defs.h"
 #include "editors.h"
 
-const long pane_flag = wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_CLOSE_ON_ALL_TABS |
-                       wxAUI_NB_CLOSE_BUTTON | wxAUI_NB_WINDOWLIST_BUTTON |
-                       wxAUI_NB_SCROLL_BUTTONS;
+const long pane_flag = wex::notebook::default_style_t |
+                       wxAUI_NB_CLOSE_ON_ALL_TABS | wxAUI_NB_CLOSE_BUTTON |
+                       wxAUI_NB_WINDOWLIST_BUTTON | wxAUI_NB_SCROLL_BUTTONS;
 
 decorated_frame::decorated_frame(app* app)
   : wex::del::frame(
