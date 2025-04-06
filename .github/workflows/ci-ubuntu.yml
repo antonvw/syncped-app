@@ -47,6 +47,7 @@ jobs:
           git clone --recursive --shallow-submodules --depth 1 https://github.com/antonvw/wex.git &&
           cp -rp wex/cmake cmake &&
           sudo mkdir -p /usr/local/include/wex/25.10 &&
+          ls -l &&
           sudo cp -rp wex/include/wex /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/external/wxWidgets/include/wx /usr/local/include/wex/25.10 &&
           sudo cp -rp build/wex-lib-ubuntu/external/wxWidgets/lib/wx/include/gtk3-unicode-static-3.3/wx/setup.h /usr/local/include/wex/25.10/wx &&
