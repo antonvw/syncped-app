@@ -47,7 +47,7 @@ jobs:
           Copy-Item -Path wex\cmake -Destination cmake -Recurse
           Copy-Item -Path wex\include\wex -Destination "c:\Program Files (x86)\wex\include\wex\25.10\wex" -Recurse
           Copy-Item -Path wex\external\wxWidgets\include\wx -Destination "c:\Program Files (x86)\wex\include\wex\25.10\wx" -Recurse
-          Copy-Item -Path wex-lib-windows\external\wxWidgets\lib\vc_x64_lib\mswu\wx\setup.h -Destination "c:\Program Files (x86)\wex\include\wex\25.10\wx" -Recurse
+          Copy-Item -Path wex-lib-windows\build/external\wxWidgets\lib\vc_x64_lib\mswu\wx\setup.h -Destination "c:\Program Files (x86)\wex\include\wex\25.10\wx" -Recurse
           Copy-Item -Path wex\external\pugixml\src\pugiconfig.hpp -Destination "c:\Program Files (x86)\wex\include\wex\25.10" -Recurse
           Copy-Item -Path wex\external\pugixml\src\pugixml.hpp -Destination "c:\Program Files (x86)\wex\include\wex\25.10" -Recurse
           Copy-Item -Path wex\external\ctags\libreadtags\readtags.h -Destination "c:\Program Files (x86)\wex\include\wex\25.10" -Recurse
