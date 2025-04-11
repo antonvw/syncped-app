@@ -54,6 +54,7 @@ jobs:
           sudo cp -rp wex/external/pugixml/src/pugixml.hpp /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/external/ctags/libreadtags/readtags.h /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/external/wxMaterialDesignArtProvider/MaterialDesign/. /usr/local/include/wex/25.10 &&
+          sudo cp -rp wex/external/wxWidgets/3rdparty/catch/single_include/catch2/catch.hpp /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/external/trompeloeil/include/. /usr/local/include/wex/25.10 &&
           mv wex/build-gen.sh . &&
           ./build-gen.sh -b -p -B ${{steps.install-boost.outputs.BOOST_ROOT}}
