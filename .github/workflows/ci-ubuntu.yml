@@ -26,7 +26,7 @@ jobs:
       - name: Install gtk
         run:
           sudo apt-get update -qq &&
-          sudo apt-get install liblzma5 libjbig0 libgtk-3-dev
+          sudo apt-get install liblzma5 libjbig0 libgtk-3-dev libxkbcommon-dev
 
       - name: Install gcc, theme-icon
         run: sudo apt-get install -yq gcc-14 g++-14 yaru-theme-icon
@@ -49,12 +49,12 @@ jobs:
           sudo mkdir -p /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/include/wex /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/external/wxWidgets/include/wx /usr/local/include/wex/25.10 &&
-          sudo cp -rp wex-lib-ubuntu/external/wxWidgets/lib/wx/include/gtk3-unicode-static-3.3/wx/setup.h /usr/local/include/wex/25.10/wx &&
+          sudo cp -rp wex-lib-ubuntu/build/external/wxWidgets/lib/wx/include/gtk3-unicode-static-3.3/wx/setup.h /usr/local/include/wex/25.10/wx &&
           sudo cp -rp wex/external/pugixml/src/pugiconfig.hpp /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/external/pugixml/src/pugixml.hpp /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/external/ctags/libreadtags/readtags.h /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/external/wxMaterialDesignArtProvider/MaterialDesign/. /usr/local/include/wex/25.10 &&
-          sudo cp -rp wex/external/doctest/doctest/doctest.h /usr/local/include/wex/25.10 &&
+          sudo cp -rp wex/external/wxWidgets/3rdparty/catch/single_include/catch2/catch.hpp /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/external/trompeloeil/include/. /usr/local/include/wex/25.10 &&
           mv wex/build-gen.sh . &&
           ./build-gen.sh -b -p -B ${{steps.install-boost.outputs.BOOST_ROOT}}
