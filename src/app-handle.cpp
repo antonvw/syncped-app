@@ -99,7 +99,7 @@ void frame::app_handle()
         this,
         m_app->get_files(),
         m_app->data(),
-        wex::data::dir::type_t().set(wex::data::dir::FILES));
+        m_app->get_dir_type());
     }
   }
 }

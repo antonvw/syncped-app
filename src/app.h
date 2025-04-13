@@ -2,7 +2,7 @@
 // Name:      app.h
 // Purpose:   Declaration of class 'app'
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2020-2023 Anton van Wezenbeek
+// Copyright: (c) 2020-2025 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -14,6 +14,7 @@ class app : public wex::del::app
 public:
   auto& data() { return m_data; }
 
+  auto& get_dir_type() const { return m_dir_type; }
   auto& get_files() const { return m_files; }
   auto  get_split() const { return m_split; }
   auto& get_tag() const { return m_tag; }
@@ -41,5 +42,7 @@ private:
 
   int m_split{-1};
 
-  wex::data::stc m_data;
+  wex::data::stc         m_data;
+  wex::data::dir::type_t m_dir_type{
+    wex::data::dir::type_t().set(wex::data::dir::FILES)};
 };

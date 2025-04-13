@@ -126,6 +126,15 @@ bool app::OnInit()
              m_is_project = on;
            }},
 
+          {{"recursive", "open specified files recursive"},
+           [&](bool on)
+           {
+             if (on)
+             {
+               m_dir_type.set(wex::data::dir::RECURSIVE);
+             }
+           }},
+
           {{"splithor,o", "split tabs horizontally"},
            [&](bool on)
            {
