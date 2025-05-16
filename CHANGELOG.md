@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [25.10] - 2025-04 [Unreleased]
+## [25.10] - 2025-10 [Unreleased]
 
 ### Added
 
@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 - uses wex 25.10
+
+### Fixed
+
+- added menu item enabler for wxID_FIND
 
 ## [25.04] - 2025-03-16
 
