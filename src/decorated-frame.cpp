@@ -2,7 +2,7 @@
 // Name:      decorated-frame.cpp
 // Purpose:   Implementation of decorated_frame class
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2021-2024 Anton van Wezenbeek
+// Copyright: (c) 2021-2025 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __WXMSW__
@@ -95,6 +95,9 @@ decorated_frame::decorated_frame(app* app)
     {{"PaneFileType", 50},
      {"PaneInfo", 100},
      {"PaneLexer", lexer_size},
+     {"PaneBlameAuthor", 100},
+     {"PaneBlameDate", 100},
+     {"PaneBlameComments", 150},
      {"PaneTheme", lexer_size},
      {"PaneVCS", -2},
      {"PaneDBG", 50, false},
