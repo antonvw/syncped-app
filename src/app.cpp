@@ -257,10 +257,7 @@ bool app::OnInit()
         break;
 
       default:
-        if (!get_catalog_dir().empty())
-        {
-          std::cout << "catalog dir: " << get_catalog_dir() << "\n";
-        }
+        std::cout << "locale: " << get_locale().GetName().ToStdString() << "\n";
     }
 
     return false;
