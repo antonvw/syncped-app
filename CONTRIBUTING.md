@@ -26,6 +26,7 @@
   - Do a pull request from the feature branch to the master branch
 
 ## ctags osx
+
 - see external/ctags/docs/osx.rst:
 
 ```bash

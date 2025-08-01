@@ -54,6 +54,30 @@ EVT_UPDATE_UI_RANGE(
   frame::on_update_ui)
 END_EVENT_TABLE()
 
+namespace wex
+{
+stc* create_page(
+  editors*              eds,
+  const wex::data::stc& data,
+  const std::string&    text,
+  const std::string&    caption,
+  const std::string&    key,
+  const wex::path&      p)
+{
+  auto* page = new wex::stc(
+    text,
+    wex::data::stc(data).window(
+      wex::data::window().parent(eds).name(p.string())));
+
+  page->get_lexer().set(wex::path_lexer(p).lexer(), true);
+
+  eds->add_page(
+    wex::data::notebook().page(page).key(key).caption(caption).select());
+
+  return page;
+}
+} // namespace wex
+
 frame::frame(app* app)
   : decorated_frame(app)
   , m_find_files(new find_files(this))
@@ -228,18 +252,13 @@ wex::factory::stc* frame::open_file(
 
   if (page == nullptr)
   {
-    page = new wex::stc(
+    page = create_page(
+      m_editors,
+      data,
       text,
-      wex::data::stc(data).window(
-        wex::data::window().parent(m_editors).name(filename.string())));
-
-    page->get_lexer().set(wex::path_lexer(filename).lexer());
-
-    m_editors->add_page(wex::data::notebook()
-                          .page(page)
-                          .key(filename.string())
-                          .caption(filename.filename())
-                          .select());
+      filename.filename(),
+      filename.string(),
+      filename);
   }
   else
   {
@@ -393,18 +412,13 @@ wex::factory::stc* frame::open_file_blame(
     return page;
   }
 
-  auto* page = new wex::stc(
+  auto* page = create_page(
+    m_editors,
+    data,
     std::string(),
-    wex::data::stc(data).window(
-      wex::data::window().parent(m_editors).name(filename.string())));
-
-  page->get_lexer().set(wex::path_lexer(filename).lexer(), true);
-
-  m_editors->add_page(wex::data::notebook()
-                        .page(page)
-                        .key(vcs.data().exe())
-                        .caption(vcs.get_blame().caption())
-                        .select());
+    vcs.get_blame().caption(),
+    vcs.data().exe(),
+    filename);
 
   vcs_blame_show(&vcs, page);
   page->EmptyUndoBuffer();
