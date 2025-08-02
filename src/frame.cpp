@@ -767,9 +767,9 @@ bool frame::vi_exec_command(wex::ex_command& command)
         page_prev();
         handled = true;
       }
-      else if (cmd.starts_with(":tabdo"))
+      else if (cmd.starts_with(":tabdo "))
       {
-        const auto& arg(wex::find_after(cmd, " "));
+        const auto arg(wex::find_after(cmd, " "));
 
         for (int page = m_editors->GetPageCount() - 1; page >= 0; page--)
         {
