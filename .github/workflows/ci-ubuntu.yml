@@ -77,5 +77,5 @@ jobs:
         with:
           name: syncped-ubuntu
           path: |
-            data/*.xml
+            wex-lib-ubuntu/data/*.xml
             build/**/syncped
