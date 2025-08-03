@@ -76,4 +76,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: syncped-ubuntu
-          path: build/**/syncped
+          path: |
+            data/*.xml
+            build/**/syncped
