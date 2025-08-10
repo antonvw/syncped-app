@@ -41,7 +41,7 @@ jobs:
           sudo cp -rp wex/external/wxWidgets/3rdparty/catch/single_include/catch2/catch.hpp /usr/local/include/wex/25.10 &&
           sudo cp -rp wex/external/trompeloeil/include/. /usr/local/include/wex/25.10 &&
           mv wex/build-gen.sh . &&
-          ./build-gen.sh -b -p
+          ./build-gen.sh -p
         env:
           CC: /opt/homebrew/opt/llvm/bin/clang
           CXX: /opt/homebrew/opt/llvm/bin/clang
@@ -49,7 +49,7 @@ jobs:
       - name: Make using ninja
         run: |
           cd wex-lib-ubuntu &&
-          find ./ -name "*.a" -exec sudo mv {} /usr/local/lib \; &&
+          find ./ -name "*.dylib" -exec sudo mv {} /usr/local/lib \; &&
           cd .. &&
           cd build &&
           ninja
