@@ -11,12 +11,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-          
+
      - name: Install boost
         run: brew install boost@1.88 && brew link boost@1.88
 
       - name: Install llvm
-        run: brew install llvm          
+        run: brew install llvm
 
       - name: Add wex libs
         uses: dawidd6/action-download-artifact@v8
