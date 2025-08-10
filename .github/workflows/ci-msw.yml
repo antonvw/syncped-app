@@ -66,5 +66,5 @@ jobs:
         with:
           name: syncped-windows
           path: |
-            wex-lib-windows/data/*.xml
+            wex-lib-windows/data/*.*
             build/**/*.exe
