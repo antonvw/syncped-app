@@ -48,6 +48,7 @@ jobs:
 
       - name: Make using ninja
         run: |
+          sudo mkdir -p /usr/local/lib &&
           cd wex-lib-macos &&
           find ./ -name "*.dylib" -exec sudo mv {} /usr/local/lib \; &&
           cd .. &&
