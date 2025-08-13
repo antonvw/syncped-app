@@ -50,7 +50,7 @@ jobs:
         run: |
           sudo mkdir -p /usr/local/lib &&
           cd wex-lib-macos &&
-          find ./ -name "*.dylib" -exec sudo mv {} /usr/local/lib \; &&
+          find ./ \( -name "*.dylib" -o -name "*.a" \) -exec sudo mv {} /usr/local/lib \; &&
           cd .. &&
           cd build &&
           ninja
