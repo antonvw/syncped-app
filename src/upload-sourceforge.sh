@@ -60,8 +60,6 @@ while getopts ":r:hduvz" opt; do
   esac
 done
 
-shift "$(($OPTIND -1))"
-
 # get the version from version.cpp
 version=$(awk 'BEGIN {FS=",";OFS=""; ORS=""}/[0-9]+,$/{print $1}END {print "\n"}' ../src/version.cpp)
 version=$(echo "${version}" | tr -s ' ' '.')
@@ -79,29 +77,27 @@ fi
 
 if [[ -n "${option_zip}" ]]; then
   # rebuild zips using flat zip without dir names (-j)
-  pushd syncped-macos
-  zip -j -r ../syncped-macos-${version}.zip *
-  popd
+  pushd syncped-macos || exit 1
+  zip -j -r ../syncped-macos-${version}.zip ./*
+  popd || exit 1
 
-  pushd syncped-ubuntu
-  zip -j -r ../syncped-ubuntu-${version}.zip *
-  popd
+  pushd syncped-ubuntu || exit 1
+  zip -j -r ../syncped-ubuntu-${version}.zip ./*
+  popd || exit 1
 
-  pushd syncped-windows
-  zip -j -r ../syncped-windows-${version}.zip *
-  popd
+  pushd syncped-windows || exit 1
+  zip -j -r ../syncped-windows-${version}.zip ./*
+  popd || exit 1
 fi
 
 if [[ -n "${option_upload}" ]]; then
   # upload all zips to sourceforge
   declare -i uploads=0
-  uploads=$(ls *.zip | wc -l)
+  uploads=$(find ./ -maxdepth 1 -name "*.zip" | wc -l)
 
-  if [[ $uploads > 0 ]]; then
-    read -p "Upload ${uploads} files (y/n)?" CONT
-    if [ "$CONT" = "y" ]; then
-      echo "yaaa";
-    else
+  if [[ $uploads -gt 0 ]]; then
+    read -r -p "Upload ${uploads} files (y/n)?" CONT
+    if [ "$CONT" != "y" ]; then
       exit 1
     fi
   else
@@ -111,9 +107,9 @@ if [[ -n "${option_upload}" ]]; then
 
   for f in ./*.zip; do
     if [[ -n "${option_verbose}" ]]; then
-      echo scp $f antonvw@frs.sourceforge.net:/home/frs/p/syncped
+      echo scp "$f" antonvw@frs.sourceforge.net:/home/frs/p/syncped
     fi
 
-    scp $f antonvw@frs.sourceforge.net:/home/frs/p/syncped
+    scp "$f" antonvw@frs.sourceforge.net:/home/frs/p/syncped
   done
 fi
