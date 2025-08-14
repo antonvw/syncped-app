@@ -95,7 +95,7 @@ if [[ -n "${option_upload}" ]]; then
   declare -i uploads=0
   uploads=$(ls *.zip | wc -l)
 
-  if [[ $uploads > 0 ]]; then
+  if [[ $uploads -gt 0 ]]; then
     read -p "Upload ${uploads} files (y/n)?" CONT
     if [ "$CONT" != "y" ]; then
       exit 1
