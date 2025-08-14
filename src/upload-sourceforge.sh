@@ -93,10 +93,10 @@ fi
 if [[ -n "${option_upload}" ]]; then
   # upload all zips to sourceforge
   declare -i uploads=0
-  uploads=$(ls *.zip | wc -l)
+  uploads=$(find ./ -maxdepth 1 -name "*.zip" | wc -l)
 
   if [[ $uploads -gt 0 ]]; then
-    read -p "Upload ${uploads} files (y/n)?" CONT
+    read -r -p "Upload ${uploads} files (y/n)?" CONT
     if [ "$CONT" != "y" ]; then
       exit 1
     fi
@@ -107,9 +107,9 @@ if [[ -n "${option_upload}" ]]; then
 
   for f in ./*.zip; do
     if [[ -n "${option_verbose}" ]]; then
-      echo scp $f antonvw@frs.sourceforge.net:/home/frs/p/syncped
+      echo scp "$f" antonvw@frs.sourceforge.net:/home/frs/p/syncped
     fi
 
-    scp $f antonvw@frs.sourceforge.net:/home/frs/p/syncped
+    scp "$f" antonvw@frs.sourceforge.net:/home/frs/p/syncped
   done
 fi
