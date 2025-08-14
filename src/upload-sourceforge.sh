@@ -60,8 +60,6 @@ while getopts ":r:hduvz" opt; do
   esac
 done
 
-shift "$(($OPTIND -1))"
-
 # get the version from version.cpp
 version=$(awk 'BEGIN {FS=",";OFS=""; ORS=""}/[0-9]+,$/{print $1}END {print "\n"}' ../src/version.cpp)
 version=$(echo "${version}" | tr -s ' ' '.')
@@ -79,17 +77,17 @@ fi
 
 if [[ -n "${option_zip}" ]]; then
   # rebuild zips using flat zip without dir names (-j)
-  pushd syncped-macos
-  zip -j -r ../syncped-macos-${version}.zip *
-  popd
+  pushd syncped-macos || exit 1
+  zip -j -r ../syncped-macos-${version}.zip ./*
+  popd || exit 1
 
-  pushd syncped-ubuntu
-  zip -j -r ../syncped-ubuntu-${version}.zip *
-  popd
+  pushd syncped-ubuntu || exit 1
+  zip -j -r ../syncped-ubuntu-${version}.zip ./*
+  popd || exit 1
 
-  pushd syncped-windows
-  zip -j -r ../syncped-windows-${version}.zip *
-  popd
+  pushd syncped-windows || exit 1
+  zip -j -r ../syncped-windows-${version}.zip ./*
+  popd || exit 1
 fi
 
 if [[ -n "${option_upload}" ]]; then
@@ -99,9 +97,7 @@ if [[ -n "${option_upload}" ]]; then
 
   if [[ $uploads > 0 ]]; then
     read -p "Upload ${uploads} files (y/n)?" CONT
-    if [ "$CONT" = "y" ]; then
-      echo "yaaa";
-    else
+    if [ "$CONT" != "y" ]; then
       exit 1
     fi
   else
