@@ -43,7 +43,7 @@ jobs:
           repo: antonvw/wex
 
       - name: Set version variable
-        run: echo "$VERSION=$(src/filter-version.sh)" >> $GITHUB_ENV
+        run: echo "VERSION=$(src/filter-version.sh)" >> $GITHUB_ENV
 
       - name: Configure
         run:
