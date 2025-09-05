@@ -60,10 +60,7 @@ while getopts ":r:hduvz" opt; do
   esac
 done
 
-# get the version from version.cpp
-version=$(awk 'BEGIN {FS=",";OFS=""; ORS=""}/[0-9]+,$/{print $1}END {print "\n"}' ../src/version.cpp)
-version=$(echo "${version}" | tr -s ' ' '.')
-version=${version:1}
+version=$(../src/filter-version.sh)
 
 if [[ -n "${option_verbose}" ]]; then
   echo "Version to be uploaded:" $version
