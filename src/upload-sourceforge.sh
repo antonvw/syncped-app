@@ -60,7 +60,9 @@ while getopts ":r:hduvz" opt; do
   esac
 done
 
-version=$(../src/filter-version.sh)
+ROOT=$(git rev-parse --show-toplevel)
+
+version=$($ROOT/src/filter-version.sh)
 
 if [[ -n "${option_verbose}" ]]; then
   echo "Version to be uploaded:" $version

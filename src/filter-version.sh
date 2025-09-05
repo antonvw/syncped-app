@@ -7,7 +7,9 @@
 # Copyright: (c) 2025 Anton van Wezenbeek
 ################################################################################
 
-version=$(awk 'BEGIN {FS=",";OFS=""; ORS=""}/[0-9]+,$/{print $1}END {print "\n"}' ../src/version.cpp)
+ROOT=$(git rev-parse --show-toplevel)
+
+version=$(awk 'BEGIN {FS=",";OFS=""; ORS=""}/[0-9]+,$/{print $1}END {print "\n"}' $ROOT/src/version.cpp)
 version=$(echo "${version}" | tr -s ' ' '.')
 version=${version:1}
 

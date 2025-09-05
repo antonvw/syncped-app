@@ -26,6 +26,9 @@ jobs:
           workflow: ci-osx.yml
           repo: antonvw/wex
 
+      - name: Set version variable
+        run: echo "$VERSION=$(src/filter-version.sh)" >> $GITHUB_ENV
+
       - name: Configure
         run:
           git clone --recursive --shallow-submodules --depth 1 https://github.com/antonvw/wex.git &&
@@ -45,7 +48,6 @@ jobs:
         env:
           CC: /opt/homebrew/opt/llvm/bin/clang
           CXX: /opt/homebrew/opt/llvm/bin/clang
-          VERSION: $(src/filter-version.sh)
 
       - name: Make using ninja
         run: |
