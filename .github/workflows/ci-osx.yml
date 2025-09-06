@@ -1,10 +1,12 @@
+# shellcheck disable=SC2086
+
 name: github-ci-osx
 
 on: [push]
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-latest
 
     steps:
       - name: Checkout code
@@ -13,7 +15,7 @@ jobs:
           submodules: recursive
 
       - name: Install boost
-        run: brew install boost@1.88 && brew link boost@1.88
+        run: brew install boost
 
       - name: Install llvm
         run: brew install llvm
