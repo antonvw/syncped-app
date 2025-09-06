@@ -15,4 +15,4 @@ Get-Content src/version.cpp |
 $version = $version.Trim()
 $version = $version -replace " +","."
 
-Echo "$version"
+Write-Output "$version"
