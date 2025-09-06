@@ -42,6 +42,9 @@ jobs:
           workflow: ci-msw.yml
           repo: antonvw/wex
 
+      - name: Set version variable
+        run: echo "VERSION=$(src/filter-version.ps1)" >> "$GITHUB_ENV"
+
       - name: Configure
         shell: pwsh
         run: |
@@ -61,8 +64,6 @@ jobs:
           Copy-Item -Path wex\external\wxWidgets\3rdparty\catch\single_include\catch2\catch.hpp -Destination "c:\Program Files (x86)\wex\include\wex\$VERSION" -Recurse
           Copy-Item wex\external\trompeloeil\include\* -Destination "c:\Program Files (x86)\wex\include\wex\$VERSION\" -Recurse
           .\wex\build-gen.ps1 -boost_dir ${{steps.install-boost.outputs.BOOST_ROOT}} -prepare
-        env:
-          VERSION: $(src\filter-version.ps1)
 
       - name: Build
         working-directory: build

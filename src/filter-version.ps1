@@ -7,7 +7,7 @@
 
 $version = ""
 
-Get-Content ../src/version.cpp |
+Get-Content src/version.cpp |
   Where-Object { $_ -match '[0-9]+,$' } |
   ForEach-Object { ($_ -split ",") } |
   ForEach-Object { $version = $version + $_ }
