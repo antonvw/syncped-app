@@ -16,7 +16,7 @@ jobs:
         run: brew install boost
 
       - name: Install llvm
-        run: brew install llvm
+        run: brew install llvm@19
 
       - name: Add wex libs
         uses: dawidd6/action-download-artifact@v8
@@ -46,8 +46,8 @@ jobs:
           mv wex/build-gen.sh . &&
           ./build-gen.sh -p
         env:
-          CC: /opt/homebrew/opt/llvm/bin/clang
-          CXX: /opt/homebrew/opt/llvm/bin/clang
+          CC: /opt/homebrew/opt/llvm@19/bin/clang
+          CXX: /opt/homebrew/opt/llvm@19/bin/clang
 
       - name: Make using ninja
         run: |
