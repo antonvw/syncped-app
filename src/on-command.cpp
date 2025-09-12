@@ -2,7 +2,7 @@
 // Name:      on-command.cpp
 // Purpose:   Implementation of class frame::on_command
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2022-2024 Anton van Wezenbeek
+// Copyright: (c) 2022-2025 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "defs.h"
@@ -72,7 +72,7 @@ void frame::on_command(wxCommandEvent& event)
         editor->get_vi().get_macros().mode().transition(
           "q",
           &editor->get_vi(),
-          true);
+          event.GetId() == ID_EDIT_MACRO_START_RECORD);
       }
       break;
 
