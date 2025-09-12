@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [25.10] - 2025-10 [Unreleased]
+## [26.04] - 2026-04 [Unreleased]
+
+## [25.10] - 2025-09-21
 
 ### Added
 
@@ -20,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 
 - added menu item enabler for wxID_FIND
+- Macro Stop Record no longer asks for a macro
 
 ## [25.04] - 2025-03-16
 
@@ -118,7 +121,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - added Find Files
 - branched from wex to gain independance
 
-[Unreleased]: https://github.com/antonvw/syncped-app/compare/v25.04..HEAD
+[Unreleased]: https://github.com/antonvw/syncped-app/compare/v25.10..HEAD
+[25.10]:      https://github.com/antonvw/syncped-app/compare/v25.04...v25.10
 [25.04]:      https://github.com/antonvw/syncped-app/compare/v24.10...v25.04
 [24.10]:      https://github.com/antonvw/syncped-app/compare/v24.04...v24.10
 [24.04]:      https://github.com/antonvw/syncped-app/compare/v23.10...v24.04
