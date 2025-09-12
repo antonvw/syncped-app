@@ -64,5 +64,5 @@ jobs:
           name: syncped-macos
           path: |
             wex-lib-macos/data/*.*
-            wex-lib-macos/**/*.dylib
+            wex-lib-macos/build
             build/**/syncped
