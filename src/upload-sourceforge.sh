@@ -76,9 +76,9 @@ fi
 
 if [[ -n "${option_zip}" ]]; then
   # rebuild zips using flat zip without dir names (-j)
-  pushd syncped-macos || exit 1
-  zip -j -r ../syncped-macos-${version}.zip ./*
-  popd || exit 1
+  # pushd syncped-macos || exit 1
+  # zip -j -r ../syncped-macos-${version}.zip ./*
+  # popd || exit 1
 
   pushd syncped-ubuntu || exit 1
   zip -j -r ../syncped-ubuntu-${version}.zip ./*

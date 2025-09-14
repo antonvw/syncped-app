@@ -36,7 +36,7 @@ jobs:
           sudo mkdir -p /usr/local/include/wex/"$VERSION" &&
           sudo cp -rp wex/include/wex /usr/local/include/wex/"$VERSION" &&
           sudo cp -rp wex/external/wxWidgets/include/wx /usr/local/include/wex/"$VERSION" &&
-          sudo cp -rp wex-lib-macos/build/external/wxWidgets/lib/wx/include/osx_cocoa-unicode-3.3/wx/setup.h /usr/local/include/wex/"$VERSION"/wx &&
+          sudo cp -rp wex-lib-macos/build/external/wxWidgets/lib/wx/include/osx_cocoa-unicode-static-3.3/wx/setup.h /usr/local/include/wex/"$VERSION"/wx &&
           sudo cp -rp wex/external/pugixml/src/pugiconfig.hpp /usr/local/include/wex/"$VERSION" &&
           sudo cp -rp wex/external/pugixml/src/pugixml.hpp /usr/local/include/wex/"$VERSION" &&
           sudo cp -rp wex/external/ctags/libreadtags/readtags.h /usr/local/include/wex/"$VERSION" &&
@@ -44,19 +44,18 @@ jobs:
           sudo cp -rp wex/external/wxWidgets/3rdparty/catch/single_include/catch2/catch.hpp /usr/local/include/wex/"$VERSION" &&
           sudo cp -rp wex/external/trompeloeil/include/. /usr/local/include/wex/"$VERSION" &&
           mv wex/build-gen.sh . &&
-          ./build-gen.sh -p
+          ./build-gen.sh -b -p -G Xcode
         env:
           CC: /opt/homebrew/opt/llvm@19/bin/clang
           CXX: /opt/homebrew/opt/llvm@19/bin/clang
 
-      - name: Make using ninja
+      - name: Make
         run: |
           sudo mkdir -p /usr/local/lib &&
           cd wex-lib-macos &&
           find ./ \( -name "*.dylib" -o -name "*.a" \) -exec sudo mv {} /usr/local/lib \; &&
           cd .. &&
-          cd build &&
-          ninja
+          cd build && xcodebuild
 
       - name: Artifacts
         uses: actions/upload-artifact@v4

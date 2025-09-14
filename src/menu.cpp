@@ -2,7 +2,7 @@
 // Name:      menu.cpp
 // Purpose:   Implementation of decorated_frame class
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2022-2024 Anton van Wezenbeek
+// Copyright: (c) 2022-2025 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <wx/stockitem.h> // for wxGetStockLabel
@@ -438,10 +438,9 @@ void decorated_frame::menu()
         {{NewControlId(),
           wxGetStockLabel(wxID_NEW),
           wex::data::menu().art(wxART_NEW).action(
-            [=, this](wxCommandEvent& event)
+            [=, this](const wxCommandEvent& event)
             {
-              const std::string text =
-                wxString::Format("%s%d", _("project"), m_project_id++);
+              const auto text = std::format("{}{}", "project", m_project_id++);
               const wex::path fn(
                 (!get_project_history()[0].empty() ?
                    wex::path(get_project_history()[0].parent_path()) :
@@ -465,7 +464,7 @@ void decorated_frame::menu()
           wex::data::menu()
             .art(wxART_FILE_OPEN)
             .action(
-              [=, this](wxCommandEvent& event)
+              [=, this](const wxCommandEvent& event)
               {
                 wxFileDialog dlg(
                   this,
