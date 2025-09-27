@@ -628,7 +628,8 @@ void decorated_frame::menu()
             {
               wxLaunchDefaultBrowser(
                 "https://antonvw.github.io/syncped/v" +
-                m_app->version().get(false) + "/syncped.htm");
+                m_app->version().get(wex::version_info::exclude_t().set()) +
+                "/syncped.htm");
             })}}),
       wxGetStockLabel(wxID_HELP)}}));
 }
