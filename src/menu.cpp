@@ -41,7 +41,7 @@ void decorated_frame::menu()
 
   menuFind->append(
     {{},
-     {ID_FIND_FILE, _("Find Files\tCtrl+L")},
+     {ID_FIND_FILE, _("Find Files")},
      {wex::ID_TOOL_REPORT_FIND, wex::ellipsed(_("Find &in Files"))}});
 
   if (!m_app->data().flags().test(wex::data::stc::WIN_READ_ONLY))
@@ -269,7 +269,7 @@ void decorated_frame::menu()
             _("&Find")},
          {},
          {wex::ID_EDIT_CONTROL_CHAR,
-          wex::ellipsed(_("&Control Char"), "Ctrl+K"),
+          wex::ellipsed(_("&Control Char")),
           wex::data::menu().action(
             [=, this](const wxCommandEvent& event)
             {
