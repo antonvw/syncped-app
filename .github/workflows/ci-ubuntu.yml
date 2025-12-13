@@ -8,12 +8,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
 
       - name: Install boost
-        uses: MarkusJx/install-boost@v2.4.5
+        uses: MarkusJx/install-boost@v2.5.1
         id: install-boost
         with:
           # REQUIRED: Specify the required boost version
@@ -35,7 +35,7 @@ jobs:
         run: sudo apt-get install ninja-build
 
       - name: Add wex libs
-        uses: dawidd6/action-download-artifact@v8
+        uses: dawidd6/action-download-artifact@v11
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: develop
@@ -75,7 +75,7 @@ jobs:
           ninja
 
       - name: Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: syncped-ubuntu
           path: |
