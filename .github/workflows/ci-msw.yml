@@ -31,6 +31,8 @@ jobs:
           boost_version: 1.89.0
           platform_version: 2022
           boost_install_dir: C:\libraries\
+          toolset: msvc
+          cache: false
 
       - name: Add msbuild
         uses: microsoft/setup-msbuild@v2
