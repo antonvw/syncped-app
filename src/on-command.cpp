@@ -94,12 +94,7 @@ void frame::on_command(wxCommandEvent& event)
 
         wex::data::notebook nd;
 
-        if (editor->path().file_exists())
-        {
-          nd.bitmap(wxTheFileIconsTable->GetSmallImageList()->GetBitmap(
-            wxFileIconsTable::file));
-        }
-        else if (!editor->get_lexer().scintilla_lexer().empty())
+        if (!editor->get_lexer().scintilla_lexer().empty())
         {
           stc->get_lexer().set(editor->get_lexer().scintilla_lexer());
         }

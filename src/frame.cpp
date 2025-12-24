@@ -291,14 +291,11 @@ frame::open_file(const wex::path& filename, const wex::data::stc& data)
       auto* project =
         new wex::del::file(filename, wex::data::window().parent(m_projects));
 
-      notebook->add_page(
-        wex::data::notebook()
-          .page(project)
-          .key(filename.string())
-          .caption(filename.name())
-          .select()
-          .bitmap(wxTheFileIconsTable->GetSmallImageList()->GetBitmap(
-            wxFileIconsTable::file)));
+      notebook->add_page(wex::data::notebook()
+                           .page(project)
+                           .key(filename.string())
+                           .caption(filename.name())
+                           .select());
     }
   }
   else
@@ -356,12 +353,7 @@ frame::open_file(const wex::path& filename, const wex::data::stc& data)
       wex::data::notebook nd;
       nd.key(filename.string());
 
-      notebook->add_page(
-        nd.page(editor)
-          .caption(filename.filename())
-          .select()
-          .bitmap(wxTheFileIconsTable->GetSmallImageList()->GetBitmap(
-            wxFileIconsTable::file)));
+      notebook->add_page(nd.page(editor).caption(filename.filename()).select());
 
       if (notebook->GetPageCount() >= 2 && m_app->get_split() != -1)
       {
