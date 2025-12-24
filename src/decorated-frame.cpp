@@ -118,6 +118,8 @@ decorated_frame::decorated_frame(app* app)
   wex::art::insert({{ID_EDIT_MACRO, wxART_EDIT}});
   wex::art::insert({{ID_EDIT_MACRO_PLAYBACK, wxART_PLAY_CIRCLE}});
 
+  show_process(false);
+
   menu();
 }
 

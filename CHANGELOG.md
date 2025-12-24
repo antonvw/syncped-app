@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 - uses wex 26.4
+- initially hide process pane
 
 ## [25.10] - 2025-09-21
 
