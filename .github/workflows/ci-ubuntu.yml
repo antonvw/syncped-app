@@ -19,7 +19,7 @@ jobs:
           # REQUIRED: Specify the required boost version
           # A list of supported versions can be found here:
           # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
-          boost_version: 1.88.0
+          boost_version: 1.89.0
           # OPTIONAL: Specify a platform version
           platform_version: 24.04
 
@@ -33,6 +33,9 @@ jobs:
 
       - name: Install ninja
         run: sudo apt-get install ninja-build
+
+      - name: Wayland
+        run: sudo apt-get install wayland-protocols libwayland-client0 libwayland-dev
 
       - name: Add wex libs
         uses: dawidd6/action-download-artifact@v12
@@ -52,7 +55,7 @@ jobs:
           sudo mkdir -p /usr/local/include/wex/"$VERSION" &&
           sudo cp -rp wex/include/wex /usr/local/include/wex/"$VERSION" &&
           sudo cp -rp wex/external/wxWidgets/include/wx /usr/local/include/wex/"$VERSION" &&
-          sudo cp -rp wex-lib-ubuntu/build/external/wxWidgets/lib/wx/include/gtk3-unicode-static-3.3/wx/setup.h /usr/local/include/wex/"$VERSION"/wx &&
+          sudo cp -rp wex-lib-ubuntu/build/external/wxWidgets/lib/wx/include/gtk3-unicode-3.3/wx/setup.h /usr/local/include/wex/"$VERSION"/wx &&
           sudo cp -rp wex/external/pugixml/src/pugiconfig.hpp /usr/local/include/wex/"$VERSION" &&
           sudo cp -rp wex/external/pugixml/src/pugixml.hpp /usr/local/include/wex/"$VERSION" &&
           sudo cp -rp wex/external/ctags/libreadtags/readtags.h /usr/local/include/wex/"$VERSION" &&
@@ -60,7 +63,7 @@ jobs:
           sudo cp -rp wex/external/wxWidgets/3rdparty/catch/single_include/catch2/catch.hpp /usr/local/include/wex/"$VERSION" &&
           sudo cp -rp wex/external/trompeloeil/include/. /usr/local/include/wex/"$VERSION" &&
           mv wex/build-gen.sh . &&
-          ./build-gen.sh -b -p -B ${{steps.install-boost.outputs.BOOST_ROOT}}
+          ./build-gen.sh -p -B ${{steps.install-boost.outputs.BOOST_ROOT}}
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
           CC: gcc-14
@@ -69,7 +72,7 @@ jobs:
       - name: Make using ninja
         run: |
           cd wex-lib-ubuntu &&
-          find ./ -name "*.a" -exec sudo mv {} /usr/local/lib \; &&
+          find ./ -name "*.so" -exec sudo mv {} /usr/local/lib \; &&
           cd .. &&
           cd build &&
           ninja
