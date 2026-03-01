@@ -31,7 +31,7 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Add wex libs
-        uses: dawidd6/action-download-artifact@v15
+        uses: dawidd6/action-download-artifact@v16
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: develop
@@ -67,7 +67,7 @@ jobs:
           msbuild /noLogo /m /p:Configuration=Release ALL_BUILD.vcxproj
 
       - name: Artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: syncped-windows
           path: |
