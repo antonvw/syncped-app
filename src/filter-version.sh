@@ -4,13 +4,16 @@
 # Name:      filter-version.sh
 # Purpose:   Filters version from source version.cpp
 # Author:    Anton van Wezenbeek
-# Copyright: (c) 2025 Anton van Wezenbeek
+# Copyright: (c) 2025-2026 Anton van Wezenbeek
 ################################################################################
 
 ROOT=$(git rev-parse --show-toplevel)
 
-version=$(awk 'BEGIN {FS=",";OFS=""; ORS=""}/[0-9]+,$/{print $1}END {print "\n"}' $ROOT/src/version.cpp)
+version=$(awk 'BEGIN {FS=",";OFS=""; ORS=""}/[0-9]+,$/{print $1}END \
+  {print "\n"}' $ROOT/src/version.cpp)
 version=$(echo "${version}" | tr -s ' ' '.')
 version=${version:1}
+x=$(echo ${version} | rev | cut -b 3- | rev)
+version=${x}
 
 echo ${version}
