@@ -5,7 +5,7 @@
 # Purpose:   Uploads all syncped artefacts to sourceforge
 #            Just run from build dir
 # Author:    Anton van Wezenbeek
-# Copyright: (c) 2025 Anton van Wezenbeek
+# Copyright: (c) 2025-2026 Anton van Wezenbeek
 ################################################################################
 
 usage()
@@ -69,9 +69,19 @@ if [[ -n "${option_verbose}" ]]; then
 fi
 
 if [[ -n "${option_download}" ]]; then
+  if ! which gh > /dev/null ; then
+    echo "gh required for download"
+    exit 1
+  fi
+
   # download artefacts from github syncped-app
   # -> syncped-macos, syncped-windows, syncped-ubuntu
   gh run download
+
+  # the gh now unzips files, we do not want that.
+  # so download manually, and remove the zip using
+  # unzip <artefact.zip> -d <artefact>
+  # rm <artefact.zip>
 fi
 
 if [[ -n "${option_zip}" ]]; then
