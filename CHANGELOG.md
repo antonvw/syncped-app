@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [26.10] - 2026-10 [Unreleased]
+
 ## [26.04] - 2026-03-14
 
 ### Changed
@@ -126,7 +128,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - added Find Files
 - branched from wex to gain independance
 
-[Unreleased]: https://github.com/antonvw/syncped-app/compare/v25.10..HEAD
+[Unreleased]: https://github.com/antonvw/syncped-app/compare/v26.04..HEAD
+[26.04]:      https://github.com/antonvw/syncped-app/compare/v25.10...v26.04
 [25.10]:      https://github.com/antonvw/syncped-app/compare/v25.04...v25.10
 [25.04]:      https://github.com/antonvw/syncped-app/compare/v24.10...v25.04
 [24.10]:      https://github.com/antonvw/syncped-app/compare/v24.04...v24.10
