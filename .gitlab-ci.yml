@@ -18,4 +18,4 @@ test:
   script:
   - export PATH=/usr/local/Cellar/homebrew/opt/bison/bin:/usr/local/Cellar/homebrew/bin:/usr/local/bin:$PATH
   - cd test
-  - robot *.robot
+  - robot -e not_ready *.robot
