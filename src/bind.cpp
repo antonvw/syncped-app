@@ -2,7 +2,7 @@
 // Name:      bind.cpp
 // Purpose:   Implementation of class frame
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2022-2024 Anton van Wezenbeek
+// Copyright: (c) 2022-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "app.h"
@@ -36,8 +36,9 @@ void frame::bind()
       int count = 0;
       for (size_t i = 0; i < m_editors->GetPageCount(); i++)
       {
-        if (auto* stc = dynamic_cast<wex::stc*>(m_editors->GetPage(i));
-            stc->path().file_exists())
+        if (
+          auto* stc = dynamic_cast<wex::stc*>(m_editors->GetPage(i));
+          stc->path().file_exists())
         {
           count++;
         }
@@ -66,6 +67,8 @@ void frame::bind()
       wex::config("recent.OpenFiles").set(count);
       wex::config("show.History")
         .set(m_history != nullptr && m_history->IsShown());
+      wex::config("show.Minimap")
+        .set(m_minimap != nullptr && m_minimap->IsShown());
       wex::config("show.Projects").set(project_open);
 
       m_find_files->Destroy();

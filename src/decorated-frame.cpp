@@ -2,7 +2,7 @@
 // Name:      decorated-frame.cpp
 // Purpose:   Implementation of decorated_frame class
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2021-2025 Anton van Wezenbeek
+// Copyright: (c) 2021-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __WXMSW__
@@ -86,6 +86,11 @@ decorated_frame::decorated_frame(app* app)
     add_pane_history();
   }
 
+  if (wex::config("show.Minimap").get(false))
+  {
+    add_pane_minimap();
+  }
+
 #ifdef __WXMSW__
   const int lexer_size = 60;
 #else
@@ -140,19 +145,39 @@ void decorated_frame::add_pane_history()
     std::string());
 }
 
+void decorated_frame::add_pane_minimap()
+{
+  m_minimap = new wxStyledTextCtrlMiniMap(
+    this,
+    dynamic_cast<wex::stc*>(m_editors->GetCurrentPage()));
+
+  pane_add(
+    {{m_minimap,
+      wxAuiPaneInfo()
+        .Right()
+        .MaximizeButton(false)
+        .CaptionVisible(false)
+        .Name("MINIMAP")
+        .CloseButton(false)
+        .MinSize(50, 150)}},
+    std::string());
+}
+
 bool decorated_frame::allow_close(wxWindowID id, wxWindow* page)
 {
   switch (id)
   {
     case ID_NOTEBOOK_EDITORS:
-      if (auto* stc = dynamic_cast<wex::stc*>(page);
-          wex::file_dialog(&stc->get_file()).show_modal_if_changed() ==
-          wxID_CANCEL)
+      if (
+        auto* stc = dynamic_cast<wex::stc*>(page);
+        wex::file_dialog(&stc->get_file()).show_modal_if_changed() ==
+        wxID_CANCEL)
       {
         return false;
       }
-      else if (wex::beautify b(stc->path());
-               b.is_active() && stc->get_file().is_written())
+      else if (
+        wex::beautify b(stc->path());
+        b.is_active() && stc->get_file().is_written())
       {
         stc->get_file().close();
         b.file(stc->path());
@@ -215,6 +240,7 @@ void decorated_frame::on_notebook(wxWindowID id, wxWindow* page)
   {
     case ID_NOTEBOOK_EDITORS:
       dynamic_cast<wex::stc*>(page)->properties_message();
+      update_minimap(dynamic_cast<wex::stc*>(page));
       break;
 
     case ID_NOTEBOOK_LISTS:
@@ -227,5 +253,13 @@ void decorated_frame::on_notebook(wxWindowID id, wxWindow* page)
 
     default:
       assert(0);
+  }
+}
+
+void decorated_frame::update_minimap(wex::stc* stc)
+{
+  if (m_minimap != nullptr)
+  {
+    m_minimap->SetEdit(stc);
   }
 }

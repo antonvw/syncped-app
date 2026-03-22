@@ -2,7 +2,7 @@
 // Name:      defs.h
 // Purpose:   Constant definitions
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2020-2022 Anton van Wezenbeek
+// Copyright: (c) 2020-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -29,4 +29,5 @@ enum
   ID_SPLIT_VERTICALLY,
   ID_VIEW_DIRCTRL,
   ID_VIEW_HISTORY,
+  ID_VIEW_MINIMAP,
 };

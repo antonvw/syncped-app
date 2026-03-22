@@ -2,12 +2,13 @@
 // Name:      decorated-frame.h
 // Purpose:   Declaration of decorated_frame class
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2021-2024 Anton van Wezenbeek
+// Copyright: (c) 2021-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
 
 #include <wex/wex.h>
+#include <wx/stc/minimap.h>
 
 class app;
 class editors;
@@ -19,16 +20,18 @@ public:
 
 protected:
   void add_pane_history();
+  void add_pane_minimap();
+  void update_minimap(wex::stc* stc);
 
-  editors*            m_editors{nullptr};
+  app*     m_app;
+  editors* m_editors{nullptr};
+
   wex::del::dirctrl*  m_dirctrl{nullptr};
   wex::del::listview* m_history{nullptr};
+  wex::notebook *     m_lists{nullptr}, *m_projects{nullptr};
+  wex::process*       m_process{nullptr};
 
-  app* m_app;
-
-  wex::notebook *m_lists{nullptr}, *m_projects{nullptr};
-
-  wex::process* m_process{nullptr};
+  wxStyledTextCtrlMiniMap* m_minimap{nullptr};
 
 private:
   bool allow_close(wxWindowID id, wxWindow* page) override;
@@ -43,5 +46,5 @@ private:
 
   int m_project_id{1};
 
-  wex::stc_entry_dialog* m_dlg;
+  wex::stc_entry_dialog* m_dlg{nullptr};
 };
