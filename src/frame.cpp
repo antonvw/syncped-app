@@ -2,7 +2,7 @@
 // Name:      frame.cpp
 // Purpose:   Implementation of class frame
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2021-2025 Anton van Wezenbeek
+// Copyright: (c) 2021-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/algorithm/string.hpp>
@@ -217,8 +217,9 @@ wex::factory::stc* frame::open_file_vcs(
 
     nd.page(new wex::stc(
       vcs.std_out(),
-      sd.window(wex::data::window().parent(m_editors).name(
-        filename.filename() + " " + unique))));
+      sd.window(
+        wex::data::window().parent(m_editors).name(
+          filename.filename() + " " + unique))));
     nd.caption(filename.filename() + " " + unique);
 
     wex::vcs_command_stc(
@@ -227,8 +228,9 @@ wex::factory::stc* frame::open_file_vcs(
                                        wex::path_lexer(filename).lexer(),
       (wex::stc*)nd.page());
 
-    if (const int index = m_editors->page_index_by_key(filename.string());
-        index != -1)
+    if (
+      const int index = m_editors->page_index_by_key(filename.string());
+      index != -1)
     {
       // Place new page before the one used for vcs.
       m_editors->insert_page(nd.index(index));
@@ -239,6 +241,8 @@ wex::factory::stc* frame::open_file_vcs(
       m_editors->add_page(nd);
     }
   }
+
+  update_minimap((wex::stc*)nd.page());
 
   return (wex::stc*)nd.page();
 }
@@ -264,6 +268,8 @@ wex::factory::stc* frame::open_file(
   {
     page->SetText(text);
   }
+
+  update_minimap(page);
 
   return page;
 }
@@ -291,11 +297,12 @@ frame::open_file(const wex::path& filename, const wex::data::stc& data)
       auto* project =
         new wex::del::file(filename, wex::data::window().parent(m_projects));
 
-      notebook->add_page(wex::data::notebook()
-                           .page(project)
-                           .key(filename.string())
-                           .caption(filename.name())
-                           .select());
+      notebook->add_page(
+        wex::data::notebook()
+          .page(project)
+          .key(filename.string())
+          .caption(filename.name())
+          .select());
     }
   }
   else
@@ -381,6 +388,8 @@ frame::open_file(const wex::path& filename, const wex::data::stc& data)
       wex::data::stc(data).set_stc(editor).inject();
     }
 
+    update_minimap(editor);
+
     if (editor->is_visual())
     {
       editor->SetFocus();
@@ -397,8 +406,9 @@ wex::factory::stc* frame::open_file_blame(
   wex::vcs_entry&       vcs,
   const wex::data::stc& data)
 {
-  if (auto* page = (wex::stc*)m_editors->set_selection(filename.string());
-      page != nullptr)
+  if (
+    auto* page = (wex::stc*)m_editors->set_selection(filename.string());
+    page != nullptr)
   {
     vcs_blame_show(&vcs, page);
     return page;
@@ -412,6 +422,7 @@ wex::factory::stc* frame::open_file_blame(
     vcs.data().exe(),
     filename);
 
+  update_minimap(page);
   vcs_blame_show(&vcs, page);
   page->EmptyUndoBuffer();
   page->SetSavePoint();
@@ -423,8 +434,9 @@ wex::factory::stc* frame::open_file_blame(
 
 void frame::open_file_same_page(const wex::path& p)
 {
-  if (auto* page = (wex::stc*)m_editors->GetPage(m_editors->GetSelection());
-      page != nullptr)
+  if (
+    auto* page = (wex::stc*)m_editors->GetPage(m_editors->GetSelection());
+    page != nullptr)
   {
     m_editors->set_page_text(
       m_editors->key_by_page(page),
@@ -449,8 +461,9 @@ bool frame::page_next(bool from_diff)
 
   m_editors->AdvanceSelection();
 
-  if (auto* stc(((wex::stc*)m_editors->GetCurrentPage()));
-      stc != nullptr && from_diff)
+  if (
+    auto* stc(((wex::stc*)m_editors->GetCurrentPage()));
+    stc != nullptr && from_diff)
   {
     stc->diffs().first();
     stc->diffs().status();
@@ -470,8 +483,9 @@ bool frame::page_prev(bool from_diff)
 
   m_editors->AdvanceSelection(false);
 
-  if (auto* stc(((wex::stc*)m_editors->GetCurrentPage()));
-      stc != nullptr && from_diff)
+  if (
+    auto* stc(((wex::stc*)m_editors->GetCurrentPage()));
+    stc != nullptr && from_diff)
   {
     stc->diffs().end();
     stc->diffs().status();
@@ -573,11 +587,12 @@ bool frame::save_as(wex::file* f, const std::string& name)
   }
   else
   {
-    if (wex::file_dialog dlg(
-          f,
-          wex::data::window().style(wxFD_SAVE).parent(this).title(
-            wxGetStockLabel(wxID_SAVEAS, wxSTOCK_NOFLAGS)));
-        dlg.ShowModal() != wxID_OK || !f->file_save(wex::path(dlg.GetPath())))
+    if (
+      wex::file_dialog dlg(
+        f,
+        wex::data::window().style(wxFD_SAVE).parent(this).title(
+          wxGetStockLabel(wxID_SAVEAS, wxSTOCK_NOFLAGS)));
+      dlg.ShowModal() != wxID_OK || !f->file_save(wex::path(dlg.GetPath())))
     {
       return false;
     }
@@ -590,8 +605,9 @@ void frame::save_as(wex::stc* editor, const std::string& name)
 {
   if (editor->get_file().is_contents_changed())
   {
-    if (const auto old(editor->get_file().path());
-        save_as(&editor->get_file(), name))
+    if (
+      const auto old(editor->get_file().path());
+      save_as(&editor->get_file(), name))
     {
       open_file(editor->get_file().path(), wex::data::stc(m_app->data()));
 
@@ -629,14 +645,16 @@ bool frame::save_current_page(const std::string& key)
 
 void frame::show_vcs()
 {
-  if (wex::vcs vcs; vcs.use() && wex::vcs::size() > 0 &&
-                    m_editors->GetPageCount() > 0 &&
-                    // stdin mode (-E) and get_branch do no work together,
-                    // boost system locks until enter is given
-                    !m_app->is_stdin())
+  if (
+    wex::vcs vcs; vcs.use() && wex::vcs::size() > 0 &&
+                  m_editors->GetPageCount() > 0 &&
+                  // stdin mode (-E) and get_branch do no work together,
+                  // boost system locks until enter is given
+                  !m_app->is_stdin())
   {
-    statustext_vcs(dynamic_cast<wex::stc*>(
-      m_editors->GetPage(m_editors->GetPageCount() - 1)));
+    statustext_vcs(
+      dynamic_cast<wex::stc*>(
+        m_editors->GetPage(m_editors->GetPageCount() - 1)));
   }
 }
 
@@ -746,8 +764,9 @@ bool frame::vi_exec_command(wex::ex_command& command)
 
   try
   {
-    if (const auto& cmd(boost::algorithm::trim_copy(command.command()));
-        m_editors->GetPageCount() > 0)
+    if (
+      const auto& cmd(boost::algorithm::trim_copy(command.command()));
+      m_editors->GetPageCount() > 0)
     {
       if (cmd == ":n")
       {
@@ -765,8 +784,9 @@ bool frame::vi_exec_command(wex::ex_command& command)
 
         for (int page = m_editors->GetPageCount() - 1; page >= 0; page--)
         {
-          if (auto* stc = (wex::stc*)m_editors->GetPage(page);
-              stc != nullptr && !arg.empty())
+          if (
+            auto* stc = (wex::stc*)m_editors->GetPage(page);
+            stc != nullptr && !arg.empty())
           {
             stc->get_vi().command(arg);
           }

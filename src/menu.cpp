@@ -2,7 +2,7 @@
 // Name:      menu.cpp
 // Purpose:   Implementation of decorated_frame class
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2022-2025 Anton van Wezenbeek
+// Copyright: (c) 2022-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <wx/stockitem.h> // for wxGetStockLabel
@@ -121,18 +121,20 @@ void decorated_frame::menu()
      wex::data::menu().action(
        [=](const wxCommandEvent& event)
        {
-         wex::listview::config_dialog(wex::data::window()
-                                        .button(wxOK | wxCANCEL | wxAPPLY)
-                                        .id(ID_OPTION_LIST));
+         wex::listview::config_dialog(
+           wex::data::window()
+             .button(wxOK | wxCANCEL | wxAPPLY)
+             .id(ID_OPTION_LIST));
        })},
     {ID_OPTION_TAB,
      wex::ellipsed(_("Set &Tab Options")),
      wex::data::menu().action(
        [=](const wxCommandEvent& event)
        {
-         wex::notebook::config_dialog(wex::data::window()
-                                        .button(wxOK | wxCANCEL | wxAPPLY)
-                                        .id(ID_OPTION_TAB));
+         wex::notebook::config_dialog(
+           wex::data::window()
+             .button(wxOK | wxCANCEL | wxAPPLY)
+             .id(ID_OPTION_TAB));
        })}});
 
   SetMenuBar(new wex::menubar(
@@ -203,9 +205,10 @@ void decorated_frame::menu()
             .action(
               [=, this](const wxCommandEvent& event)
               {
-                if (auto* stc =
-                      dynamic_cast<wex::stc*>(m_editors->GetCurrentPage());
-                    stc != nullptr)
+                if (
+                  auto* stc =
+                    dynamic_cast<wex::stc*>(m_editors->GetCurrentPage());
+                  stc != nullptr)
                 {
                   if (!allow_close(m_editors->GetId(), stc))
                   {
@@ -356,6 +359,28 @@ void decorated_frame::menu()
                 event.Check(m_history != nullptr && pane_is_shown("HISTORY"));
               })},
 
+         {ID_VIEW_MINIMAP,
+          _("&Minimap"),
+          wex::menu_item::CHECK,
+          wex::data::menu()
+            .action(
+              [=, this](const wxCommandEvent& event)
+              {
+                if (m_minimap == nullptr)
+                {
+                  add_pane_minimap();
+                }
+                else
+                {
+                  pane_toggle("MINIMAP");
+                };
+              })
+            .ui(
+              [=, this](wxUpdateUIEvent& event)
+              {
+                event.Check(m_minimap != nullptr && pane_is_shown("MINIMAP"));
+              })},
+
          {NewControlId(),
           _("&Output"),
           wex::menu_item::CHECK,
@@ -450,11 +475,12 @@ void decorated_frame::menu()
                 new wex::del::file(fn, wex::data::window().parent(m_projects));
               dynamic_cast<wex::del::file*>(page)->file_new(fn);
               // This file does yet exist, so do not give it a bitmap.
-              m_projects->add_page(wex::data::notebook()
-                                     .page(page)
-                                     .key(fn.string())
-                                     .caption(text)
-                                     .select());
+              m_projects->add_page(
+                wex::data::notebook()
+                  .page(page)
+                  .key(fn.string())
+                  .caption(text)
+                  .select());
               set_recent_project(fn);
               pane_show("PROJECTS");
             })},
@@ -492,8 +518,9 @@ void decorated_frame::menu()
                 wex::open_files(
                   this,
                   v,
-                  wex::data::stc().flags(wex::data::stc::window_t().set(
-                    wex::data::stc::WIN_IS_PROJECT)));
+                  wex::data::stc().flags(
+                    wex::data::stc::window_t().set(
+                      wex::data::stc::WIN_IS_PROJECT)));
               })},
 
          {NewControlId(),
