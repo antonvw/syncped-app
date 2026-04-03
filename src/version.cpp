@@ -9,19 +9,21 @@
 
 const wex::version_info app::version() const
 {
-  std::string description(_("This program offers a portable text or "
-                            "binary editor with automatic syncing."));
+  std::string description(
+    _("This program offers a portable text or "
+      "binary editor with automatic syncing."));
 #ifdef __WXMSW__
-  description += _("All its config files are read\n"
-                   "and saved in the same directory as "
-                   "where the executable is.");
+  description +=
+    _("All its config files are read\n"
+      "and saved in the same directory as "
+      "where the executable is.");
 #endif
   description += _("\n\nUsing:\n") + wex::external_libraries().str();
 
   return wex::version_info(
     {"syncped",
      26,
-     4,
+     10,
      0,
      0,
      description,
