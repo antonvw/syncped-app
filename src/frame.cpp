@@ -668,6 +668,11 @@ void frame::statusbar_clicked(const std::string& pane)
 
       update_listviews();
 
+      if (auto* shell = wex::process::get_shell(); shell != nullptr)
+      {
+        shell->get_lexer().set(shell->get_lexer().display_lexer());
+      }
+
       wex::lexers::get()->apply_default_style(
         [=, this](const std::string& back)
         {
