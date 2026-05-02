@@ -2,7 +2,7 @@
 // Name:      editors.cpp
 // Purpose:   Implementation of editors class
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2021-2024 Anton van Wezenbeek
+// Copyright: (c) 2021-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "editors.h"
@@ -70,15 +70,43 @@ editors::editors(wex::del::frame* frame, const wex::data::window& data)
       {
         menu.append({{wex::ID_ALL_CLOSE_OTHERS, _("Close Others")}});
       }
-
-      if (auto* stc = dynamic_cast<wex::stc*>(wxAuiNotebook::GetCurrentPage());
-          stc->get_file().path().file_exists() &&
-          wex::vcs::dir_exists(stc->get_file().path()))
+      if (
+        auto* stc = dynamic_cast<wex::stc*>(wxAuiNotebook::GetCurrentPage());
+        stc->get_file().path().file_exists() &&
+        wex::vcs::dir_exists(stc->get_file().path()))
       {
         menu.append({{}, {stc->get_file().path(), frame}});
       }
 
       menu.append({{}, {wex::ID_ALL_STC_CLEAR_DIFFS, _("Clear Diffs")}});
+
+      if (GetPageCount() == 2)
+      {
+        menu.append(
+          {{wxWindow::NewControlId(),
+            _("Diff Other"),
+            wex::data::menu().action(
+              [=, this](wxCommandEvent&)
+              {
+                auto* stc0 = dynamic_cast<wex::stc*>(GetPage(0));
+                auto* stc1 = dynamic_cast<wex::stc*>(GetPage(1));
+                auto* stc  = dynamic_cast<wex::stc*>(GetCurrentPage());
+                if (stc == stc0)
+                {
+                  compare_file(
+                    stc1->get_file().path(),
+                    stc0->get_file().path(),
+                    wex::compare_t::USE_AS_PROVIDED);
+                }
+                else
+                {
+                  compare_file(
+                    stc0->get_file().path(),
+                    stc1->get_file().path(),
+                    wex::compare_t::USE_AS_PROVIDED);
+                }
+              })}});
+      }
 
       PopupMenu(&menu);
     });
