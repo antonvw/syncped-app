@@ -512,12 +512,14 @@ bool frame::print_ex(wex::syntax::stc* stc, const std::string& text)
 
   if (page == nullptr)
   {
+    page_save();
     page = new wex::stc(
       text,
       wex::data::stc().window(
         wex::data::window().name("Print").parent(m_editors)));
     m_editors->add_page(wex::data::notebook().page(page).key("Print").select());
     m_editors->split("Print", wxBOTTOM);
+    page_restore();
   }
   else
   {
