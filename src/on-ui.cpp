@@ -2,7 +2,7 @@
 // Name:      on-ui.cpp
 // Purpose:   Implementation of class frame::on_update_ui
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2022-2024 Anton van Wezenbeek
+// Copyright: (c) 2022-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "defs.h"
@@ -117,18 +117,17 @@ void frame::on_update_ui(wxUpdateUIEvent& event)
             assert(0);
         }
       }
-      else if (auto* list = dynamic_cast<wex::del::file*>(get_listview());
-               list != nullptr && list->IsShown())
+      else if (
+        auto* list = dynamic_cast<wex::factory::listview*>(get_listview());
+        list != nullptr && list->IsShown())
       {
-        event.Enable(false);
-
         if (
           event.GetId() > wex::ID_TOOL_LOWEST &&
           event.GetId() < wex::ID_TOOL_HIGHEST)
         {
           event.Enable(list->GetSelectedItemCount() > 0);
         }
-        else if (event.GetId() == wxID_FIND)
+        else
         {
           event.Enable(list->GetItemCount() > 0);
         }
