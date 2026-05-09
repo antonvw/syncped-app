@@ -88,10 +88,12 @@ editors::editors(wex::del::frame* frame, const wex::data::window& data)
             wex::data::menu().action(
               [=, this](wxCommandEvent&)
               {
-                auto* stc0 = dynamic_cast<wex::stc*>(GetPage(0));
-                auto* stc1 = dynamic_cast<wex::stc*>(GetPage(1));
-                auto* stc  = dynamic_cast<wex::stc*>(GetCurrentPage());
-                if (stc == stc0)
+                auto* stc0(dynamic_cast<wex::stc*>(GetPage(0)));
+                auto* stc1(dynamic_cast<wex::stc*>(GetPage(1)));
+
+                if (
+                  auto* stc(dynamic_cast<wex::stc*>(GetCurrentPage()));
+                  stc == stc0)
                 {
                   compare_file(
                     stc1->get_file().path(),

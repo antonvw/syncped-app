@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 
 - shell process follows a theme change
+- event enable / disable for several menu items
+- file save as menu item for not yet eixsting files
 
 ## [26.04] - 2026-03-14
 

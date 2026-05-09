@@ -19,6 +19,7 @@ BEGIN_EVENT_TABLE(frame, decorated_frame)
 EVT_MENU(wxID_DELETE, frame::on_command)
 EVT_MENU(wxID_JUMP_TO, frame::on_command)
 EVT_MENU(wxID_SELECTALL, frame::on_command)
+
 EVT_MENU_RANGE(wxID_CUT, wxID_CLEAR, frame::on_command)
 EVT_MENU_RANGE(wxID_SAVE, wxID_CLOSE_ALL, frame::on_command)
 EVT_MENU_RANGE(
@@ -26,10 +27,12 @@ EVT_MENU_RANGE(
   ID_EDIT_MACRO_STOP_RECORD,
   frame::on_command)
 EVT_MENU_RANGE(ID_SPLIT, ID_SPLIT_VERTICALLY, frame::on_command)
+
 EVT_UPDATE_UI(wex::ID_ALL_CLOSE, frame::on_update_ui)
 EVT_UPDATE_UI(wex::ID_ALL_SAVE, frame::on_update_ui)
+EVT_UPDATE_UI(wex::ID_EDIT_CONTROL_CHAR, frame::on_update_ui)
+EVT_UPDATE_UI(wex::del::ID_PROJECT_SAVE, frame::on_update_ui)
 EVT_UPDATE_UI(wxID_EXECUTE, frame::on_update_ui)
-EVT_UPDATE_UI(wxID_FIND, frame::on_update_ui)
 EVT_UPDATE_UI(wxID_JUMP_TO, frame::on_update_ui)
 EVT_UPDATE_UI(wxID_PRINT, frame::on_update_ui)
 EVT_UPDATE_UI(wxID_PREVIEW, frame::on_update_ui)
@@ -38,16 +41,13 @@ EVT_UPDATE_UI(wxID_UNDO, frame::on_update_ui)
 EVT_UPDATE_UI(wxID_REDO, frame::on_update_ui)
 EVT_UPDATE_UI(wxID_SAVE, frame::on_update_ui)
 EVT_UPDATE_UI(wxID_STOP, frame::on_update_ui)
-EVT_UPDATE_UI(wex::ID_EDIT_CONTROL_CHAR, frame::on_update_ui)
 EVT_UPDATE_UI(ID_EDIT_MACRO, frame::on_update_ui)
 EVT_UPDATE_UI(ID_EDIT_MACRO_MENU, frame::on_update_ui)
 EVT_UPDATE_UI(ID_EDIT_MACRO_PLAYBACK, frame::on_update_ui)
 EVT_UPDATE_UI(ID_EDIT_MACRO_START_RECORD, frame::on_update_ui)
 EVT_UPDATE_UI(ID_EDIT_MACRO_STOP_RECORD, frame::on_update_ui)
-EVT_UPDATE_UI(wex::del::ID_PROJECT_SAVE, frame::on_update_ui)
-// Some wxID's are shared between stc and listview, so
-// enable / disable is more complex, not yet done
-// for the range wxID_CUT wxID_SELECTALL
+
+EVT_UPDATE_UI_RANGE(wxID_CUT, wxID_SELECTALL, frame::on_update_ui)
 EVT_UPDATE_UI_RANGE(
   wex::ID_EDIT_FIND_NEXT,
   wex::ID_EDIT_FIND_PREVIOUS,
@@ -624,9 +624,9 @@ void frame::save_as(wex::stc* editor, const std::string& name)
   }
   else
   {
-    if (wex::file f(editor->get_file()); save_as(&f, name))
+    if (auto* f(&editor->get_file()); save_as(f, name))
     {
-      open_file(f.path(), wex::data::stc(m_app->data()));
+      open_file(f->path(), wex::data::stc(m_app->data()));
     }
   }
 }
