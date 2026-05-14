@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - added minimap
 - added Diff Other option when 2 pages are opened
+- added script create-zip.sh to collect syncped and wex as zipped sources
 
 ### Changed
 

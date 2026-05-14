@@ -88,28 +88,31 @@ editors::editors(wex::del::frame* frame, const wex::data::window& data)
             wex::data::menu().action(
               [=, this](wxCommandEvent&)
               {
-                auto* stc0(dynamic_cast<wex::stc*>(GetPage(0)));
-                auto* stc1(dynamic_cast<wex::stc*>(GetPage(1)));
-
-                if (
-                  auto* stc(dynamic_cast<wex::stc*>(GetCurrentPage()));
-                  stc == stc0)
-                {
-                  compare_file(
-                    stc1->get_file().path(),
-                    stc0->get_file().path(),
-                    wex::compare_t::USE_AS_PROVIDED);
-                }
-                else
-                {
-                  compare_file(
-                    stc0->get_file().path(),
-                    stc1->get_file().path(),
-                    wex::compare_t::USE_AS_PROVIDED);
-                }
+                do_compare();
               })}});
       }
 
       PopupMenu(&menu);
     });
+}
+
+void editors::do_compare()
+{
+  auto* stx_x(dynamic_cast<wex::stc*>(GetPage(0)));
+  auto* stx_y(dynamic_cast<wex::stc*>(GetPage(1)));
+
+  if (auto* stc(dynamic_cast<wex::stc*>(GetCurrentPage())); stc == stx_x)
+  {
+    compare_file(
+      stx_y->get_file().path(),
+      stx_x->get_file().path(),
+      wex::compare_t::USE_AS_PROVIDED);
+  }
+  else
+  {
+    compare_file(
+      stx_x->get_file().path(),
+      stx_y->get_file().path(),
+      wex::compare_t::USE_AS_PROVIDED);
+  }
 }

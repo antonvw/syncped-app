@@ -2,7 +2,7 @@
 // Name:      editors.h
 // Purpose:   Declaration of editors class
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2021 Anton van Wezenbeek
+// Copyright: (c) 2021-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -18,5 +18,7 @@ public:
   void reset() { m_split = false; };
 
 private:
+  void do_compare();
+
   bool m_split{false};
 };
