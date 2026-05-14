@@ -70,20 +70,27 @@ editors::editors(wex::del::frame* frame, const wex::data::window& data)
       {
         menu.append({{wex::ID_ALL_CLOSE_OTHERS, _("Close Others")}});
       }
+
       if (
         auto* stc = dynamic_cast<wex::stc*>(wxAuiNotebook::GetCurrentPage());
         stc->get_file().path().file_exists() &&
         wex::vcs::dir_exists(stc->get_file().path()))
       {
         menu.append({{}, {stc->get_file().path(), frame}});
+
+        if (stc->diffs().size() > 0)
+        {
+          menu.append({{}, {wex::ID_ALL_STC_CLEAR_DIFFS, _("Clear Diffs")}});
+        }
       }
 
-      menu.append({{}, {wex::ID_ALL_STC_CLEAR_DIFFS, _("Clear Diffs")}});
-
-      if (GetPageCount() == 2)
+      if (
+        GetPageCount() == 2 &&
+        !wex::config(_("list.Comparator")).get_first_of().empty())
       {
         menu.append(
-          {{wxWindow::NewControlId(),
+          {{},
+           {wxWindow::NewControlId(),
             _("Diff Other"),
             wex::data::menu().action(
               [=, this](wxCommandEvent&)
