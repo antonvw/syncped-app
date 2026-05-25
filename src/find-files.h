@@ -2,20 +2,20 @@
 // Name:      find-files.h
 // Purpose:   Declaration of class find_files
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2020-2024 Anton van Wezenbeek
+// Copyright: (c) 2020-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
 
 #include <wex/wex.h>
 
-class frame;
+class decorated_frame;
 
 class find_files : public wex::item_dialog
 {
 public:
   // Constructor.
-  explicit find_files(wex::del::frame* f);
+  explicit find_files(decorated_frame* f);
 
   // Destroys window, saves data.
   bool Destroy() override;
@@ -27,7 +27,7 @@ public:
 private:
   void run(bool is_enter_key);
 
-  wex::del::frame* m_frame;
+  decorated_frame* m_frame;
   wex::listview*   m_listview;
   wex::path        m_root;
 
