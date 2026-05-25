@@ -18,6 +18,8 @@ class decorated_frame : public wex::del::frame
 public:
   decorated_frame(app* app);
 
+  wex::del::dirctrl* dirctrl() { return m_dirctrl; };
+
 protected:
   void add_pane_history();
   void add_pane_minimap();

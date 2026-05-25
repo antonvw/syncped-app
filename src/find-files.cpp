@@ -2,15 +2,16 @@
 // Name:      find-files.cpp
 // Purpose:   Implementation of class find_files
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2020-2025 Anton van Wezenbeek
+// Copyright: (c) 2020-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <thread>
 
+#include "decorated-frame.h"
 #include "defs.h"
 #include "find-files.h"
 
-find_files::find_files(wex::del::frame* f)
+find_files::find_files(decorated_frame* f)
   : item_dialog(
       {wex::add_combobox_with_max(
          _("find.File"),
@@ -110,9 +111,10 @@ void find_files::run(bool is_enter_key)
     wex::data::dir()
       .file_spec(m_value, true)
       .max_matches(wex::config(_("find.Max")).get(50))
-      .type(wex::data::dir::type_t()
-              .set(wex::data::dir::FILES)
-              .set(wex::data::dir::RECURSIVE))
+      .type(
+        wex::data::dir::type_t()
+          .set(wex::data::dir::FILES)
+          .set(wex::data::dir::RECURSIVE))
       .vcs(m_frame->vcs()),
     m_listview)
     .find_files();
@@ -122,11 +124,29 @@ void find_files::set_root()
 {
   if (auto* editor = m_frame->get_stc(); editor != nullptr)
   {
-    m_root = wex::vcs({editor->path()}).toplevel();
+    bool changed = false;
 
-    if (!m_root.dir_exists())
+    if (m_frame->pane_is_shown("DIRCTRL"))
     {
-      m_root = wex::path(editor->path().parent_path());
+      m_frame->dirctrl()->on_selected_paths(
+        [&, this](const std::vector<wex::path> p)
+        {
+          if (p[0].dir_exists())
+          {
+            m_root  = p[0];
+            changed = true;
+          }
+        });
+    }
+
+    if (!changed)
+    {
+      m_root = wex::vcs({editor->path()}).toplevel();
+
+      if (!m_root.dir_exists())
+      {
+        m_root = wex::path(editor->path().parent_path());
+      }
     }
 
     wex::log::trace("find files root") << m_root.string();
