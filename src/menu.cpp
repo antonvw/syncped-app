@@ -110,6 +110,19 @@ void decorated_frame::menu()
        {}});
   }
 
+  if (!wex::lexers::get()->get_lsp_servers().empty())
+  {
+    menuOptions->append(
+      {{NewControlId(),
+        wex::ellipsed(_("Set &LSP")),
+        wex::data::menu().action(
+          [=, this](wxCommandEvent&)
+          {
+            wex::lsp::client::config_dialog();
+          })},
+       {}});
+  }
+
   menuOptions->append({
 #ifndef __WXOSX__
     {wxID_PREFERENCES, wex::ellipsed(_("Set &Editor Options"))},
