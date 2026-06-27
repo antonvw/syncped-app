@@ -283,6 +283,12 @@ frame::open_file(const wex::path& filename, const wex::data::stc& data)
 
   assert(notebook != nullptr);
 
+  if (!data.allow_change_page() &&
+    filename.string() != notebook->current_page_key())
+  {
+    return nullptr;
+  }
+
   auto* page = notebook->set_selection(filename.string());
 
   if (data.flags().test(wex::data::stc::WIN_IS_PROJECT))
