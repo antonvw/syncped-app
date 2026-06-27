@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - uses wex 26.10
 - Find Files uses selected path on Explorer if the window is shown and
   a path is selected
+- updates to support lsp
 
 ### Fixed
 
