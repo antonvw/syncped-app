@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Find Files uses selected path on Explorer if the window is shown and
   a path is selected
 - updates to support lsp
+- prevent large notebook captions due to vcs data
 
 ### Fixed
 
