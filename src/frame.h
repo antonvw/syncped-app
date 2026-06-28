@@ -2,7 +2,7 @@
 // Name:      frame.h
 // Purpose:   Declaration of class frame
 // Author:    Anton van Wezenbeek
-// Copyright: (c) 2020-2024 Anton van Wezenbeek
+// Copyright: (c) 2020-2026 Anton van Wezenbeek
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -92,6 +92,7 @@ private:
 
   int m_split_id{1};
   int m_nb_sel{-1};
+  int m_nb_vcs_no{1};
 
   std::string m_saved_page;
 

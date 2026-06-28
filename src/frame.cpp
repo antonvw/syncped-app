@@ -220,7 +220,7 @@ wex::factory::stc* frame::open_file_vcs(
       sd.window(
         wex::data::window().parent(m_editors).name(
           filename.filename() + " " + unique))));
-    nd.caption(filename.filename() + " " + unique);
+    nd.caption(filename.filename() + " " + std::to_string(m_nb_vcs_no++));
 
     wex::vcs_command_stc(
       vcs.get_command(),
