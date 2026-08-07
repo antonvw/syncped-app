@@ -118,7 +118,7 @@ void decorated_frame::menu()
         wex::data::menu().action(
           [=, this](wxCommandEvent&)
           {
-            wex::lsp::client::config_dialog();
+            lsp_config_dialog();
           })},
        {}});
   }

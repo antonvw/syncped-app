@@ -17,10 +17,17 @@ version=$($ROOT/src/filter-version.sh)
 # generate output in current folder
 output="$(pwd)/sp-wex-${version}.zip"
 
+cp -p ./create-zip-build.sh ../../build.sh || exit
+
 # we have to be in the parent dir for toplevel dir
 cd ../..
 
-zip -r ${output} syncped -x "*/build/*" "*/.git*" "*/.cache*" "*/tidy*" "*/swig*"
+zip -r ${output} build.sh
+
+zip -r ${output} syncped -x "*/build/*" "*/.git*" "*/.cache*" "*/tidy*"\
+  "*/swig*" "*/*.json"
+
+rm build.sh || exit
 
 # if wex is in /workspaces, use that, otherwise look in home dir
 if [ -d "/workspaces/wex" ]; then
@@ -35,4 +42,5 @@ else
   fi
 fi
 
-zip -r ${output} wex -x "wex/build/*" "*/.git*" "*/.cache*" "*/tidy*" "*/swig*"
+zip -r ${output} wex -x "wex/build/*" "*/.git*" "*/.cache*" "*/tidy*"\
+  "*/swig*" "*/*.json"
