@@ -34,6 +34,8 @@ private:
 
   bool is_open(const wex::path& filename) override;
 
+  void lsp_sync(const std::set<std::string>& lexers) override;
+
   bool page_next(bool from_diff = false) override;
   bool page_prev(bool from_diff = false) override;
   bool page_restore() override;

@@ -190,6 +190,25 @@ bool frame::is_open(const wex::path& filename)
   return m_editors->page_index_by_key(filename.string()) != wxNOT_FOUND;
 }
 
+void frame::lsp_sync(const std::set<std::string>& lexers)
+{
+  for (const auto& lexer : lexers)
+  {
+    if (auto* client = lsp_clients_find(lexer); client != nullptr)
+    {
+      for (int page = (int)m_editors->GetPageCount() - 1; page >= 0; page--)
+      {
+        if (
+          auto* stc = reinterpret_cast<wex::stc*>(m_editors->GetPage(page));
+          stc->get_lexer().scintilla_lexer() == lexer)
+        {
+          client->did_open(stc->path(), stc->get_text());
+        }
+      }
+    }
+  }
+}
+
 wex::factory::stc* frame::open_file_vcs(
   const wex::path&      filename,
   wex::vcs_entry&       vcs,
@@ -283,7 +302,8 @@ frame::open_file(const wex::path& filename, const wex::data::stc& data)
 
   assert(notebook != nullptr);
 
-  if (!data.allow_change_page() &&
+  if (
+    !data.allow_change_page() &&
     filename.string() != notebook->current_page_key())
   {
     return nullptr;
