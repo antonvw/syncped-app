@@ -11,16 +11,16 @@ if [ "$1" != "" ]; then
   arg="-B $1"
 fi
 
-cd wex
-./build-gen.sh $arg
+cd wex || exit
+./build-gen.sh "$arg"
 
-cd build
+cd build || exit
 cmake ..
 
 ninja
 sudo ninja install
 
 # build syncped
-cd ..
-cd syncped
-wex-build-gen.sh $arg
+cd ../..
+cd syncped || exit
+wex-build-gen.sh "$arg"
