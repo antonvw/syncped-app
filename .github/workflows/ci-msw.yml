@@ -30,7 +30,7 @@ jobs:
         uses: microsoft/setup-msbuild@v3
 
       - name: Add wex libs
-        uses: dawidd6/action-download-artifact@v23
+        uses: dawidd6/action-download-artifact@v24
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: develop
