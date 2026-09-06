@@ -18,7 +18,7 @@ jobs:
         with:
           # REQUIRED: Specify the required boost version
           # should match the wex workflow
-          boost_version: 1.91.0
+          boost_version: 1.92.0
           platform_version: 24.04
 
       - name: Install gtk
