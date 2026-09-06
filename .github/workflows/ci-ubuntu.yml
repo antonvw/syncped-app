@@ -36,7 +36,7 @@ jobs:
         run: sudo apt-get install wayland-protocols libwayland-client0 libwayland-dev
 
       - name: Add wex libs
-        uses: dawidd6/action-download-artifact@v23
+        uses: dawidd6/action-download-artifact@v24
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: develop
