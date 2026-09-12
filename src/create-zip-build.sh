@@ -23,4 +23,4 @@ sudo ninja install
 # build syncped
 cd ../..
 cd syncped || exit
-wex-build-gen.sh "$arg"
+wex-build-gen.sh "$1"
