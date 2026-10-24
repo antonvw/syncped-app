@@ -22,8 +22,8 @@ const wex::version_info app::version() const
 
   return wex::version_info(
     {"syncped",
-     26,
-     10,
+     27,
+     4,
      0,
      0,
      description,
